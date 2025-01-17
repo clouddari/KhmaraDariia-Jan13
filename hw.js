@@ -10,8 +10,6 @@ do {
     }
 } while (hours === '' || isNaN(hours));
 
-if (hours !== null && hours !== '' && !isNaN(hours)) {
     hours = Number(hours); // Convert the input to a number - because it's a string by default
     let seconds = hours * 3600;
     alert('In ' + hours + " hour(s) " + 'there are ' + seconds + " seconds");
-}
