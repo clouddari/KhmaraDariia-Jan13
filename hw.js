@@ -85,28 +85,39 @@ function mean (){
 }
 mean();
 
-function fiveDivide(){
-    let num;
 
+function fiveDivide(){
+    let number;
     do{
-        num= prompt('Enter a five-digit number: ');
-        if (num === null){
+        number= prompt('Enter a five-digit number: ');
+        if (number === null){
             alert('You have canceled the operation');
             return;
         }
-        if(isNaN(num) || num.length !== 5){
-            alert('Please enter a valid five-digit number');
-        }
-    } while(isNaN(num) || num.length !== 5);
-            let num5=num%10;
-            let num4=Math.floor((num%100)/10);
-            let num3=Math.floor((num%1000)/100);          
-            let num2=Math.floor((num%10000)/1000);
-            let num1=Math.floor(num/10000);
+        
+    }while(isNaN(number) || number.length !== 5);
+    number = parseInt(number);
+
+
+// Розкладання числа на цифри
+let digit1 = (number - (number % 10000)) / 10000; // Перша цифра
+number = number - digit1 * 10000; // Видалення першої цифри
+
+let digit2 = (number - (number % 1000)) / 1000; // Друга цифра
+number = number - digit2 * 1000; // Видалення другої цифри
+
+let digit3 = (number - (number % 100)) / 100; // Третя цифра
+number = number - digit3 * 100; // Видалення третьої цифри
+
+let digit4 = (number - (number % 10)) / 10; // Четверта цифра
+let digit5 = number - digit4 * 10; // Остання цифра
+
+// Виведення цифр через пробіл
+console.log(digit1, digit2, digit3, digit4, digit5);
+
            
-           return alert(`${num1} ${num2} ${num3} ${num4} ${num5}`);
+return alert(`${digit1} ${digit2} ${digit3} ${digit4} ${digit5}`);
          
 }
-
 
 fiveDivide();
