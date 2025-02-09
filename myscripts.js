@@ -1,146 +1,105 @@
-//Вивести на сторінку в один рядок через кому числа від 10 до 20
+// 20-30 05
 
-let task1 = '';
+let i = 20;
+let result = "";
 
-for (let i = 10; i <= 20; i++) {
-    task1 += i;
-    if (i < 20) {
-        task1 += ', ';
-    }
-}
-alert(`числа від 10 до 20: 
-    ${task1}`);
+do{
+    i += 0.5;
+    result += i + " ";
 
+} while (i < 30);
 
-// Вивести квадрати чисел від 10 до 20
-let task2 = '';
+alert(result);
 
-for (let j = 10; j <= 20; j++) {
-    task2 += j*j;
-    if (j < 20) {
-        task2 += ', ';
-    }
-}
-alert(`квадрати чисел від 10 до 20: 
-    ${task2}`);
+//Один долар коштує 40 гривень. Вивести дані з розрахунком вартості 10, 20, 30... 100 доларів
+
+let uah = 0; 
+let result2 = "";
+
+do{
+    uah += 10 ;
+    result2 += `${uah} доларів коштує ${uah * 40} ГРИВЕНЬ \n`;
+
+}while (uah < 100);
 
 
+alert(result2);
 
-let task3 = '';
+//Дано ціле число. Вивести всі цілі числа від 1 до 100, квадрат яких не перевищує числа N
 
-for (let j = 1; j <= 10; j ++) {
-    task3 += `7 x ${j} = ${j*7} \n`;
-}
+let n = prompt("enter ціле число");
+n = Number(n);
 
-alert(`таблиця множ на 7:\n${task3}`);
-
-
-//Знайти суму всіх цілих чисел від 1 до 15
-
-let task4 = 0;
-let steps = "";
-
-for (let m = 1; m <= 15;  m++) {
-     task4 += m;
-     steps += (m === 1) ? `${m}` : ` + ${m}`;
+let k = 1; 
+result = " ";
 
 
-}
+while (k * k <= n && k <= 100){
+    result += k + " ";
+    k++
+ }
 
-alert(`сума всіх цілих чисел від 1 до 15: \n ${steps } = ${task4}`);
+ alert(result);
 
+ 
 
-//Знайти добуток всіх цілих чисел від 15 до 35
+ //Дано ціле число. 
+ // З'ясувати, чи воно є простим 
+ // (простим називається число, більше ніж 1, які мають інших дільників крім 1 і себе).
 
-let task5 = 1;
-let steps5 = "";
+ let numNum = prompt("введіть ціле число більше 1 щоб перевірити чи воно є простим");
+ numNum = Number(numNum);
 
-for (let k = 15; k <= 35; k++) {
-    task5 *= k;
-    steps5 += (k === 15) ? `${k}` : ` * ${k}`;
-}
+ let dil = 2; 
+ let isPrime = true;
 
-alert (`добуток всіх цілих чисел від 15 до 35: \n ${steps5} = ${task5}`);
-
-
-
-
-//Знайти середнє арифметичне всіх цілих чисел від 1 до 500
-
-let task6 = 0;  
-let answer; 
-
-for (let p = 1; p <= 500; p++) {
-
-    task6 += p; 
-    answer = task6/p;
-
-}
-alert(`середнє арифметичне всіх чисел від 1 до 500: ${answer}`);
-
-
-
-
-let sumNum = 0;
-
-for (let num = 30; num <= 80; num++) {
-
-    if (num % 2 === 0) {
-       sumNum += num;
-    }
-}
-
-alert (`сума всіх парних чисел від 30 до 80: ${sumNum}`);
-
-//кратні 3 від 100 до 200
-
-let answ = " ";
-for (let number = 100; number <= 200; number++) {
-
-    if (number % 3 === 0) {
-      console.log(number);
-      answ += ` ${number} `;
-    
-    }
-}
-alert (`числа кратні 3 від 100 до 200:\n ${answ}`);
-
-
-
-//Дано натуральне число.
-//Знайти та вивести на сторінку всі його дільники.
-//  + парні дільники 
-// + сума парних 
-
-
-let num = +prompt("Введіть натуральне число");
-let diln = " ";
-let parnyi = " ";
-let sumParn = 0;
-
-for (let di = 1; di <= num; di++) {
-    if (num % di === 0) {
-        diln += `${di} `;
-
-        if (di % 2 === 0) {
-            parnyi += `${di} `;
-            sumParn += di;
+ while(dil <=  Math.sqrt(numNum)){
+        if (numNum % dil === 0){
+            isPrime = false;
+            break;
         }
-        
+        dil++;
+ }
+
+ if (isPrime && numNum > 1) {
+    alert("число просте!")
+ } else {
+    alert("число не просте")
+ }
+
+
+// Дано деяке число. 
+// Ваше завдання – визначити, чи можна отримати це число,
+//  піднявши число 3 до певного натурального ступеня.
+//  (Як приклад, числа 9 та 81 можна отримати цим способом, але 13 – ні.)
+
+let numberito = prompt("введіть число, щоб перевірити чи можна його отримати піднявши інше число до 3 натурального степеня");
+numberito = Number(numberito);
+
+let found = false; 
+
+for (let h = 1; h <= Math.cbrt(numberito); h++){
+    if (h * h * h === numberito){
+        found = true;
+        break;
     }
-    }
-    
-alert (`дільники числа ${num}:\n ${diln} \n
-    парні дільники числа ${num}:\n ${parnyi}
-    сума парних дільників числа ${num}:\n ${sumParn}`);
-
-
-
-//т мн на 10 
-let tenTable = " ";
-
-for (let ten = 1; ten <= 10; ten ++) {
-    tenTable += `10 x ${ten} = ${ten*10} \n`;
 }
 
-alert(`таблиця множ на 10:\n${tenTable}`);
+for (let h = 1; h <= Math.sqrt(numberito); h++){
+    if (h * h  === numberito){
+        found = true;
+        break;
+    }
+}
+
+
+if (found) {
+    alert("Так, це число можна отримати, піднявши інше число до квадрата або куба.");
+} else {
+    alert("Ні, таке число не можна отримати.");
+}
+
+
+
+
+
