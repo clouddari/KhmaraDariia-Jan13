@@ -304,7 +304,7 @@ function showCategories() {
           selectedToppings
         );
 
-        const cart = JSON.parse(localStorage.getItem("cart") ||" []");
+        const cart = JSON.parse(localStorage.getItem("cart") || " []");
         cart.push(productToAdd.toJSON());
         localStorage.setItem("cart", JSON.stringify(cart));
         console.log("товар додано до кошика");
@@ -336,7 +336,7 @@ function showCategories() {
 function renderCart() {
   const totalContainer = document.querySelector("#cart-total");
 
-  const cart = JSON.parse(localStorage.getItem("cart") ||" []");
+  const cart = JSON.parse(localStorage.getItem("cart") || " []");
   const cartContainer = document.querySelector("#cart-items");
   cartContainer.innerHTML = "";
   const buttonsOnCartPage = document
@@ -393,7 +393,7 @@ function renderCart() {
 }
 
 function removeFromCart(index) {
-    const cart = JSON.parse(localStorage.getItem("cart") ||" []");
+  const cart = JSON.parse(localStorage.getItem("cart") || " []");
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
@@ -404,8 +404,8 @@ window.clearCart = function () {
   renderCart();
 };
 
-window.sendOrderToBackend = function() {
-    const cart = JSON.parse(localStorage.getItem("cart") ||" []");
+window.sendOrderToBackend = function () {
+  const cart = JSON.parse(localStorage.getItem("cart") || " []");
 
   fetch("http://localhost:4000/orders", {
     method: "POST",
@@ -422,8 +422,18 @@ window.sendOrderToBackend = function() {
     .catch((error) => {
       console.error("Помилка при відправці замовлення:", error);
     });
-}
+
+  const orderSetToBackendMessage = document.querySelector(
+    "#sent-to-backend-message"
+  );
+
+  orderSetToBackendMessage.classList.remove("d-none");
+  setTimeout(() => {
+    orderSetToBackendMessage.classList.add("d-none");
+  }, 4000);
+
+  clearCart();
+};
 
 showCategories();
 renderCart();
-
