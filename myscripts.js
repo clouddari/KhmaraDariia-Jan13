@@ -1,76 +1,52 @@
-let arr = [16,-37,54,-4,72,-56,47,4,-16,25,-37,46,4,-51,27,-63,4,-54,76,-4,12,-35,4,47];
+let users = [{"index":0,
+    "isActive":true,
+    "balance":"$2,226.60",
+    "name":"Eugenia Sawyer",
+    "gender":"female",
+    "phone":"+1 (840) 583-3207",
+    "address":"949 John Street,Rose, Puerto Rico, 1857"
+}, {"index":1,
+    "isActive":true,
+    "balance":"$2,613.77",
+    "name":"Pauline Gallegos",
+    "gender":"female","phone":"+1 (985) 593-3328",
+    "address":"328 Greenpoint Avenue, Torboy, North Dakota, 6857"
+}, {"index":2,
+    "isActive":false,
+    "balance":"$3,976.41",
+    "name":"Middleton Chaney", 
+    "gender":"male",
+    "phone":"+1 (995) 591-2478",
+    "address":"807 Fleet Walk, Brutus, Arkansas, 9783"
+}, {"index":3,
+    "isActive":true,
+    "balance":"$1,934.58",
+    "name":"Burns Poole",
+    "gender":"male","phone":"+1 (885) 559-3422",
+    "address":"730 Seba Avenue, Osage, Alabama, 6290"
+}, {"index":4,"isActive":true,"balance":"$3,261.65",
+        "name":"Mcfadden Horne",
+        "gender":"male",
+        "phone":"+1 (942) 565-3988",
+        "address":"120 Scholes Street, Kirk, Michigan, 1018"
+}, {"index":5,
+    "isActive":false,
+    "balance":"$1,790.56",
+    "name":"Suzette Lewis",
+    "gender":"female",
+    "phone":"+1 (837) 586-3283",
+    "address":"314 Dunne Place, Bawcomville, Guam, 9053"
+}]
 
 
-const positive = arr.filter(a => a > 0);
+//tелефонні номери користувачів в який баланс більше 2000 дол
+let money = users.filter(balance => Number(balance["balance"].replace(/[^0-9.]+/g, "")) > 2000)
+.map(number => number["phone"] );
+console.log(`телефонні номери користувачів,
+    баланс яких більше 2000:\n ${money}`);
 
-let sumPositiveInitial = 0; 
-const sumPositive = positive.reduce((accumulator, currentValue) => accumulator + currentValue, sumPositiveInitial,
- );
+//cума всіх балансів користувачів
 
- //Знайти суму та кількість позитивних елементів.
-
-console.log(`кількість додатних елементів: ${positive.length}`);
-console.log(`cума чисел більше нуля: ${sumPositive}`)
-
-
-
-//Знайти максимальний елемент масиву та його порядковий номер.
-let max = Math.max(...arr);
-let maxIndex = arr.findIndex(a => a === max);
-
-console.log(`найбільше число масиву: ${max},
-його порядковий номер: ${maxIndex + 1 }
-`);
-
-// Знайти мінімальний елемент масиву та його порядковий номер.
-
-let min = Math.min(...arr);
-let minIndex = arr.findIndex(a => a === min);
-
-console.log(`найменше число масиву: ${min},
-його порядковий номер: ${minIndex + 1 }`);
-
-
-//Визначити кількість негативних елементів.
-let negative = arr.filter(a => a < 0);
-console.log(`кількість від'ємних елементів: ${negative.length}`);
-
-//Знайти кількість непарних позитивних елементів.
-let odd = positive.filter(a => a % 2 !== 0);
-console.log(`непарні додатні елементи(кількість): ${odd.length}`)
-
-
-//Визначити кількість парних позитивних елементів.
-let even = positive.filter(a => a % 2 === 0);
-console.log(`парні додатні елементи(кількість): ${even.length}`)
-
-//Знайти суму парних позитивних елементів.
-const sumPositiveEven = even.reduce((accumulator, currentValue) =>
-     accumulator + currentValue, sumPositiveInitial,
- );
- 
- console.log(`сума парних додатніх елементів: ${sumPositiveEven}`)
-
-//Знайти суму непарних позитивних елементів.
-const sumPositiveOdd = odd.reduce((accumulator, currentValue) =>
-    accumulator + currentValue, sumPositiveInitial,
-);
-
-console.log(`сума непарних додатніх елементів: ${sumPositiveOdd}`);
-
-
-//Знайти добуток позитивних елементів.
-let productInitial = 1;
-const product = positive.reduce((accumulator, currentValue) =>
-    accumulator * currentValue, productInitial,
-);
-
-console.log(`добуток додатніх елементів: ${product}`);
-
-
-//Знайти найбільший серед елементів масиву, решту занулити.
-
-const maxNull = arr.map(el => (el === max  ? el : 0));
-console.log(maxNull);
-
-
+let summ = users.map(a => Number(a["balance"].replace(/[^0-9.]+/g, "")))
+.reduce((a,b) => a+b).toFixed(2);
+console.log(summ);
