@@ -49,4 +49,4 @@ console.log(`телефонні номери користувачів,
 
 let summ = users.map(a => Number(a["balance"].replace(/[^0-9.]+/g, "")))
 .reduce((a,b) => a+b).toFixed(2);
-console.log(summ);
+console.log(`сума балансів користувачів:\n ${summ}`);
