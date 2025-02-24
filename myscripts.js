@@ -1,52 +1,12 @@
-let users = [{"index":0,
-    "isActive":true,
-    "balance":"$2,226.60",
-    "name":"Eugenia Sawyer",
-    "gender":"female",
-    "phone":"+1 (840) 583-3207",
-    "address":"949 John Street,Rose, Puerto Rico, 1857"
-}, {"index":1,
-    "isActive":true,
-    "balance":"$2,613.77",
-    "name":"Pauline Gallegos",
-    "gender":"female","phone":"+1 (985) 593-3328",
-    "address":"328 Greenpoint Avenue, Torboy, North Dakota, 6857"
-}, {"index":2,
-    "isActive":false,
-    "balance":"$3,976.41",
-    "name":"Middleton Chaney", 
-    "gender":"male",
-    "phone":"+1 (995) 591-2478",
-    "address":"807 Fleet Walk, Brutus, Arkansas, 9783"
-}, {"index":3,
-    "isActive":true,
-    "balance":"$1,934.58",
-    "name":"Burns Poole",
-    "gender":"male","phone":"+1 (885) 559-3422",
-    "address":"730 Seba Avenue, Osage, Alabama, 6290"
-}, {"index":4,"isActive":true,"balance":"$3,261.65",
-        "name":"Mcfadden Horne",
-        "gender":"male",
-        "phone":"+1 (942) 565-3988",
-        "address":"120 Scholes Street, Kirk, Michigan, 1018"
-}, {"index":5,
-    "isActive":false,
-    "balance":"$1,790.56",
-    "name":"Suzette Lewis",
-    "gender":"female",
-    "phone":"+1 (837) 586-3283",
-    "address":"314 Dunne Place, Bawcomville, Guam, 9053"
-}]
+//Реалізуйте функцію removeElement(array, item),
+//  щоб видалити елемент item з масиву array.
 
+let array = [1, 2, 3, 4, 5, 6, 7];
+console.log(array);
 
-//tелефонні номери користувачів в який баланс більше 2000 дол
-let money = users.filter(balance => Number(balance["balance"].replace(/[^0-9.]+/g, "")) > 2000)
-.map(number => number["phone"] );
-console.log(`телефонні номери користувачів,
-    баланс яких більше 2000:\n ${money}`);
+function removeElement(array, item) {
+    let result = array.splice(array.indexOf(item), 1);
+    return array;
+}
 
-//cума всіх балансів користувачів
-
-let summ = users.map(a => Number(a["balance"].replace(/[^0-9.]+/g, "")))
-.reduce((a,b) => a+b).toFixed(2);
-console.log(`сума балансів користувачів:\n ${summ}`);
+console.log(removeElement(array, 5));
