@@ -35,7 +35,7 @@ function two(){
         let count = 0;
 
         for(let i = 0; i < arr.length; i++){
-            if (typeof arr[i] === 'number' && arr[i] !== null && arr[i] !== undefined && !isNaN(arr[i])) {
+            if (typeof arr[i] === 'number' && arr[i] !== null && arr[i] !== undefined && !isNaN(arr[i]) && isFinite(arr[i])){
                 sum += arr[i];
                 count++;
             }
@@ -48,6 +48,7 @@ function two(){
 console.log(two()(arr1));
 console.log(two()(arr2));
 console.log(two()(arr3));
+console.log(two()([Infinity, 2,2,5]));
 
 /* 
 3 - Написати функцію doMath(x, znak, y), яка отримує 3 аргументи: числа x та y, рядок znak. 
