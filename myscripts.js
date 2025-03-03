@@ -35,7 +35,7 @@ function two(){
         let count = 0;
 
         for(let i = 0; i < arr.length; i++){
-            if(typeof arr[i] === 'number' && !isNaN(arr[i])){
+            if (typeof arr[i] === 'number' && arr[i] !== null && arr[i] !== undefined && !isNaN(arr[i])) {
                 sum += arr[i];
                 count++;
             }
