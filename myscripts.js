@@ -1,22 +1,141 @@
-/* Реалізуйте функцію generateKey(length, characters),
- що повертає рядок випадкових символів із набору characters довжиною length.
+/* 
+1 - Написати функцію, яка приймає один параметр.
+При першому виклику вона запам'ятовує його, при другому — підсумовує переданий параметр з тим, що передали перший раз і тд.
+ Все це із замиканнями, наприклад: sum(3) = 3 sum(5) = 8 sum(20) = 28
+*/
 
- Наприклад:
-const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-const key = generateKey(16, characters);
-console.log(key); // eg599gb60q926j8i */
+function one(){ 
+    let total = 0;
 
-const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-function generateKey(length, characters) {
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    return function(num){
+        return total += num;
     }
-    return result;  
 }
 
-let key = generateKey(3, characters);
-console.log(key);
+const sum = one();
+
+console.log(sum(3));
+console.log(sum(5));
+console.log(sum(20));
+
+/*
+2 - Даний масив з елементами різних типів. Створити функцію, 
+яка вираховує середнє арифметичне лише числових елементів даного масиву.
+*/
+
+let arr1 = [1, 2, 3, 4, 5, 'a', 'b', 'c', 'd', 'e'];
+let arr2 = [1, 2, 3, 4, 5, 6]; 
+let arr3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+function two(){
+    let sum = 0;
+    let count = 0;
+
+    return function(arr){
+        for(let i = 0; i < arr.length; i++){
+            if(typeof arr[i] === 'number'){
+                sum += arr[i];
+                count++;
+            }
+
+            if(count === 0){
+                return 'No numbers in array';
+            }
+        }
+        return sum / count;
+    }   
+}
+
+console.log(two()(arr1));
+console.log(two()(arr2));
+console.log(two()(arr3));
+
+/* 
+3 - Написати функцію doMath(x, znak, y), яка отримує 3 аргументи: числа x та y, рядок znak. 
+У змінній znak може бути значення +, -, *, /, %, ^ (ступінь). 
+Вивести результат математичної дії, вказаної у змінній znak. Обидва числа та знак виходять від користувача.
+*/
 
 
+let x = +prompt('введіть перше число');
+let y = +prompt('введіть друге число');
+let znak = prompt('введіть знак (+, -, *, /, %, ^)');
+
+function doMath(x, znak, y){
+    switch(znak){
+        case '+':
+            return x + y;
+        case '-':
+            return x - y;
+        case '*':
+            return x * y;
+        case '/':
+            return x / y;
+        case '%':
+            return x % y;
+        case '^':
+            return x ** y;
+        default:
+            return 'Invalid znak';
+    }
+
+}
+
+alert(`Відповідь: ${doMath(x, znak, y)}`);
+
+
+
+/* 
+4 - Написати функцію заповнення даними користувача двомірного масиву.
+Довжину основного масиву та внутрішніх масивів задає користувач.
+Значення всіх елементів масивів задає користувач.
+
+*/
+
+
+let outer= +prompt('введіть довжину основного масиву');  //кількість рядків в масиві
+let inner = +prompt('введіть довжину внутрішніх масивів'); //кількість елементів в рядку(довжина кожного внутрішнього масиву)
+
+function array2D(outer, inner){
+    let result = [];//масив де будуть зберігатись масиви масиву (рядки)
+
+    
+    for(let i = 0; i < outer; i++){//цикл для створення рядків
+        let arrayInside = []; //масив для зберігання елементів рядка
+
+        for(let j = 0; j < inner; j++){
+            let value = prompt(`введіть значення елементу [${i}][${j}]`);
+            arrayInside.push(value);
+        }
+
+        result.push(arrayInside);
+    }
+
+    return result;
+}
+
+let arr = array2D(outer, inner);
+console.table(arr);
+
+
+
+
+//5 -- Створити функцію, яка видаляє з рядка всі символи, які ми передали другим аргументом. 
+// 'func("hello world", ['l', 'd'])' поверне нам "heo wor". Вихідний рядок та символи для видалення задає користувач 
+
+let str = " hello world";
+let array = [];
+
+function remover(str, array){
+    let result = str;
+
+    for(let i = 0; i < arr.length; i++){
+        result = result.replaceAll(array[i], '');
+    }
+
+    return result;
+}
+
+
+console.log(remover('hello world', ['l', 'd']));
+console.log(remover('blue', ['u', 'e']));
