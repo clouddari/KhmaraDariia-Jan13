@@ -24,25 +24,24 @@ console.log(sum(20));
 */
 
 let arr1 = [1, 2, 3, 4, 5, 'a', 'b', 'c', 'd', 'e'];
-let arr2 = [1, 2, 3, 4, 5, 6]; 
+let arr2 = [1, 2, 3, 4, 5, 6, null, undefined]; 
 let arr3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 
 function two(){
-    let sum = 0;
-    let count = 0;
+   
 
     return function(arr){
+        let sum = 0;
+        let count = 0;
+
         for(let i = 0; i < arr.length; i++){
-            if(typeof arr[i] === 'number'){
+            if(typeof arr[i] === 'number' && !isNaN(arr[i])){
                 sum += arr[i];
                 count++;
             }
-
-            if(count === 0){
-                return 'No numbers in array';
-            }
         }
-        return sum / count;
+        return count === 0 ? 'No numbers in array' : sum / count;
+    
     }   
 }
 
