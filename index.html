@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>19</title>
+    <title>20</title>
     <link rel="stylesheet" href="index.css">
+    <style>
+        .emo   {background-color: rgb(127, 127, 217);
+            padding: 10px;
+            border-radius: 35px;
+            margin: 0 2px;
+        }
+
+        .counter {
+            display: flex;
+            justify-content: center;
+        }
+       
+  
+        </style>
 </head>
 
 <body>
-    <h3>ДЗ 19. Знайомство з DOM</h3> <br>
+    <h3>ДЗ 20 - голосування смайликами</h3> <br>
+    <div class="emoji" style="display: flex;"> 
+        <div class="item">
+            <h2  class = "emo">&#128511;</h2>
+            <h2 class = "counter"></h2>
+        </div>
 
-    <div class="task1">
-        <h3>Task 1</h3>
-        <input id = "task_1" type="text" />
-    <div id = "focus"> </div>
-      
-    </div>
+        <div class="item">
+            <h2 class = "emo">&#128515;</h2>
+            <h2 class = "counter"></h2>
+        </div>
 
-    <div class="task2">
-        <h3>Task 2</h3>
-        <button class="prompt-button">Натисни щоб ввести посилання</button> <br><br>
-        <button class="link-button">Натисни щоб перейти на обраний сайт</button>
-    </div>
+        <div class="item">
+            <h2  class = "emo">&#128525;</h2>
+            <h2 class = "counter"></h2>
+        </div>
 
-    <div class="task3">
-        <h3>Task 3</h3>
-        <div id="tableContainer"></div>
-    </div>
+        <div class="item">
+            <h2  class = "emo">&#128529;</h2>
+            <h2 class = "counter"></h2>
+        </div>
 
-    <div class="task4">
-        <h3>Task 4</h3>
-        <div id = "images">
-            <button id="randomImg">отримати нове зображення</button> <br> <br>
+        <div class="item">
+            <h2  class = "emo">&#128559;</h2>
+            <h2 class = "counter"></h2>
         </div>
     </div>
     <script src="myscripts.js"></script>
