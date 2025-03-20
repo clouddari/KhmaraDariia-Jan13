@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>20</title>
+    <title>21</title>
     <link rel="stylesheet" href="index.css">
     <style>
-        .emo   {background-color: rgb(127, 127, 217);
+        body{
+            text-align: center;
+        }
+        .slisd  {background-color: rgb(127, 127, 217);
             padding: 10px;
             border-radius: 35px;
             margin: 0 2px;
         }
 
-        .counter {
-            display: flex;
+        .slider {
+            display:flex;
+            flex-direction: row;
             justify-content: center;
+            align-items: center;
         }
-       
-  
+        .imageDiv{
+            margin: 10px;
+        }
+        
+        img{
+            object-fit:contain;
+        }
+
+        button{
+            height: min-content;
+            color: rgb(255, 255, 255);
+            border-radius: 25px;
+            font-size:larger;
+            background-color: rgb(127, 124, 165);
+            border-style: none;
+            padding: 5px 10px;
+        }
+
         </style>
 </head>
 
 <body>
-    <h3>ДЗ 20 - голосування смайликами</h3> <br>
-    <div class="emoji" style="display: flex;"> 
-        <div class="item">
-            <h2  class = "emo">&#128511;</h2>
-            <h2 class = "counter"></h2>
-        </div>
-
-        <div class="item">
-            <h2 class = "emo">&#128515;</h2>
-            <h2 class = "counter"></h2>
-        </div>
-
-        <div class="item">
-            <h2  class = "emo">&#128525;</h2>
-            <h2 class = "counter"></h2>
-        </div>
-
-        <div class="item">
-            <h2  class = "emo">&#128529;</h2>
-            <h2 class = "counter"></h2>
-        </div>
-
-        <div class="item">
-            <h2  class = "emo">&#128559;</h2>
-            <h2 class = "counter"></h2>
-        </div>
+    <h3>ДЗ 21. Слайдер базовий</h3> <br>
+    <div class = "slider">
+       <button class = "prev">⬅</button>
+            <div class="imageDiv"></div>
+       <button class = "next">⮕</button>
     </div>
     <script src="myscripts.js"></script>
 </body>
