@@ -1,141 +1,102 @@
-const products = [
-  {
-    number: 111,
-    name: "Ноутбук",
-    category: "Електроніка",
-    price: 10000,
-    description: "Потужний ноутбук для роботи і розваг.",
-  },
-  {
-    number: 112,
-    name: "Смартфон",
-    category: "Електроніка",
-    price: 7000,
-    description: "Смартфон з якісною камерою і великою батареєю.",
-  },
-  {
-    number: 113,
-    name: "Крісло",
-    category: "Меблі",
-    price: 1150,
-    description: "Зручне крісло для офісу або дому.",
-  },
-  {
-    number: 114,
-    name: "Книга",
-    category: "Література",
-    price: 200,
-    description: "Класичний роман у новому виданні.",
-  },
-  {
-    number: 115,
-    name: "Навушники",
-    category: "Аудіо",
-    price: 80,
-    description: "Безпровідні навушники з чудовим звуком.",
-  },
-];
+// -1- Є текстове поле на сторінці. При фокусі на цьому полі збоку з'являється <div> з інформацією.
+// При зникненні фокуса - так само пропадає
+const focus = document.getElementById("focus");
+const test = document.getElementById("task_1");
 
-// Є масив об'єктів з товарами та їх цінами.
-// Вивести в консоль список із даними по всіх товарах
-// (кожен товар на окремому рядку в консолі).
+test.addEventListener("focus", (event) => {
+  const newDiv = document.createElement("div");
+  newDiv.textContent = "focused";
 
-// for (const product of products){
-//   console.log(product);
-// };
+  focus.appendChild(newDiv);
 
-// Від користувача отримати номер товару
-// (реалізувати перевірку на правильність введення номера)
-// та кількість (також реалізувати валідацію),
-// вивести на сторінку підсумкову вартість покупки.
-//  Якщо вартість перевищує 10.000грн, розрахувати знижку в 20%
-// і повідомити про це користувача.
+  test.addEventListener("blur", (event) => {
+    newDiv.remove();
+  });
+});
 
-// let givenCode = prompt("Введіть код(номер) товару");
-// givenCode = Number(givenCode);
+// -2- На сторінці є дві кнопки. При натисканні на першу кнопку просимо
+// користувача ввести в prompt посилання, при натисканні на другу -
+// переадресовується на інший сайт (за раніше введеним посиланням).
+// Реалізувати перевірку на http/https. Якщо протокол не вказано - додаємо
 
-// const selectedProduct = products.find(product => product.number === givenCode)
+let webLink = "";
 
-// if(isNaN(givenCode) || !selectedProduct){
-//   alert(`будь ласка, введіть правильний код товару`)
-// } else{
-//   alert(`ви обрали ${selectedProduct.name}\nопис: ${selectedProduct.description}\nціна: ${selectedProduct.price}грн`)
-// }
+document.querySelector(".prompt-button").addEventListener("click", function () {
+  webLink = prompt("введіть посилання на сайт, який бажаєте відкрити");
 
-// const amount = prompt("Введіть бажану кількість одиниць товару");
-
-// if(isNaN(amount) || amount <= 0 || amount == null){
-//   alert(`будь ласка, вкажіть кількість бажаного товару`);
-// } else if (selectedProduct.price * amount > 10000){
-//   alert(`ви обрали ${selectedProduct.name}\nу кількості ${amount}шт\nціна покупки: ${selectedProduct.price * amount * 0.8} грн,\nвраховуючи знижку 20%`);
-// } else {
-//   alert(`ви обрали ${selectedProduct.name}\nу кількості ${amount}шт\nціна покупки: ${selectedProduct.price * amount} грн`)
-// }
-
-// * ускладнити практичне завдання запровадженням категорій товарів.
-//  Відповідно, користувач може вибрати категорію товару, номер товару та кількість.
-//  Потім результат його вибору з'явиться на сторінці
-
-const categories = [
-  ...new Set(products.map((product) => product.category.toLowerCase())),
-];
-
-let givenCategory = null;
-
-while(!givenCategory || !categories.includes(givenCategory)){
-  givenCategory = prompt("введіть категорію бажаного товару");
-
-  if (givenCategory) {
-    givenCategory = givenCategory.trim().toLowerCase();
+  if (!webLink) {
+    alert("ви не ввели посилання");
   }
+});
 
-  if (!categories.includes(givenCategory)) {
-    alert("Будь ласка, введіть правильну категорію товару");
+function setHttp(link) {
+  if (link.search(/^http[s]?\:\/\//) == -1) {
+    link = "http://" + link;
   }
+  return link;
 }
 
-  let givenCode;
-  let selectedProduct = null;
-
-  while (!selectedProduct) {
-    givenCode = prompt("Введіть код(номер) товару з обраної категорії");
-    givenCode = Number(givenCode);
-
-    selectedProduct = products.find(
-      (product) =>
-        product.number === givenCode &&
-        product.category.toLocaleLowerCase() === givenCategory
-    );
-
-    if (!selectedProduct) {
-      alert(`неправильний код товару, спробуйте ще раз`);
-    }
-  }
-
-  alert(
-    `Ви обрали ${selectedProduct.name}\nОпис: ${selectedProduct.description}\nЦіна: ${selectedProduct.price} грн`
-  );
-
-  let amount = prompt("Введіть бажану кількість одиниць товару");
-  amount = Number(amount);
-
-  if (isNaN(amount) || amount <= 0) {
-    alert(`будь ласка, вкажіть кількість бажаного товару`);
-  } else if (selectedProduct.price * amount > 10000) {
-    alert(
-      `ви обрали ${
-        selectedProduct.name
-      }\nу кількості ${amount}шт\nціна покупки: ${
-        selectedProduct.price * amount * 0.8
-      } грн,\nвраховуючи знижку 20%`
-    );
+document.querySelector(".link-button").addEventListener("click", function () {
+  if (webLink) {
+    window.open(setHttp(webLink));
   } else {
-    alert(
-      `ви обрали ${
-        selectedProduct.name
-      }\nу кількості ${amount}шт\nціна покупки: ${
-        selectedProduct.price * amount
-      } грн`
-    );
+    alert("ви не ввели посилання");
+  }
+});
+
+// -3- Вивести таблицю 10 × 10, заповнену числами від 1 до 100 (таблиця створюється динамічно)
+const tableContainer = document.getElementById("tableContainer");
+
+const table = document.createElement("table");
+const body = document.createElement("tbody");
+let num = 1;
+
+for (let i = 0; i < 10; i++) {
+  const row = document.createElement("tr");
+
+  for (let j = 0; j < 10; j++) {
+    const cell = document.createElement("td");
+    const cellText = document.createTextNode(num);
+    num++;
+
+    cell.appendChild(cellText);
+    row.appendChild(cell);
   }
 
+  body.appendChild(row);
+}
+
+table.appendChild(body);
+tableContainer.appendChild(table);
+
+table.setAttribute("border", "1");
+
+// -4- У папці images є зображення 1.jpg, 2.jpg, 3.jpg, 4.jpg, 5.jpg, 6.jpg, 7.jpg, 8.jpg, 9.jpg.
+//  Вивести зображення з цієї папки отримане випадковим чином (Math.random)
+
+const theImages = [
+  "img1.jpg",
+  "img2.jpg",
+  "img3.jpg",
+  "img4.avif",
+  "img5.jpeg",
+  "img6.jpg",
+  "img7.jpg",
+  "img8.jpg",
+  "img9.webp",
+  "img10.jpeg",
+];
+
+function getRandomImage() {
+  const randomIndex = Math.floor(Math.random() * theImages.length);
+  return theImages[randomIndex];
+}
+
+let image = document.createElement("img");
+image.src = getRandomImage();
+image.width = 240;
+document.body.appendChild(image);
+
+document.getElementById("randomImg").addEventListener("click", function () {
+  image.src = getRandomImage();
+});
