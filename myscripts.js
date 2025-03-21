@@ -1,56 +1,57 @@
-const prevButton = document.querySelector(".prev");
-const nextButton = document.querySelector(".next");
-let imageDiv = document.querySelector(".imageDiv");
+// {/* <ul>
+//   <li>1</li>
+//   <li>2</li>
+//   <li>3</li>
+// </ul> */}
 
-const images = [
-  "img1.jpg",
-  "img2.jpg",
-  "img3.jpg",
-  "img4.avif",
-  "img5.jpeg",
-  "img6.jpg",
-  "img7.jpg",
-  "img8.jpg",
-  "img9.webp",
-  "img10.jpeg",
-];
+let arr = [1, 2, 3, 55];
+let arr2 = [1,2, [1.1,1.2,1.3], 3];
+let arr3  = [1, 2, [1.1, 1.2, [1.21, 1.22], 1.3], 3];
 
-let image = document.createElement("img");
-imageDiv.appendChild(image);
-let currentIndex = 0;
+function generateList(arr){
+const newDiv = document.createElement("div");
+let ul = document.createElement("ul");
 
-const updateImage = () => {
-  image.src = images[currentIndex];
-  image.width = 250;
-  image.height = 250;
+for(let i = 0; i < arr.length; i++){
+  let li = document.createElement("li");
+ 
+  if(Array.isArray(arr[i])){
+    let subUl = document.createElement("ul");
 
-  if(currentIndex === images.length - 1){
-    nextButton.style.display = "none";
+    generateListDynamically(arr[i], subUl);
+
+    li.appendChild(subUl);
   } else {
-    nextButton.style.display = "inline";
+    li.textContent = arr[i];
   }
-  
-  if(currentIndex === 0){
-   prevButton.style.display = "none";
-  } else {
-    prevButton.style.display = "inline";
-  }
-  
+
+  ul.appendChild(li);
+} 
+
+
+document.body.appendChild(newDiv);
+newDiv.appendChild(ul);
 }
 
-prevButton.addEventListener("click", () => {
-    if(currentIndex > 0){
-      currentIndex--;
-      updateImage();
+function generateListDynamically(arr, parentUl){
+  for(let i = 0; i < arr.length; i++){
+    let li = document.createElement("li");
+   
+    if(Array.isArray(arr[i])){
+      let subUl = document.createElement("ul");
+      generateListDynamically(arr[i], subUl);
+  
+      li.appendChild(subUl);
+    } else {
+      li.textContent = arr[i];
     }
-  })
-
-nextButton.addEventListener("click", () => {
-  if(currentIndex < images.length - 1){
-    currentIndex++;
-    updateImage();
-  }
-})
+  
+    parentUl.appendChild(li);
+  } 
+}
 
 
-updateImage();
+
+generateList(arr);
+
+
