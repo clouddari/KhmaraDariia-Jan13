@@ -1,23 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>23</title>
-    <link rel="stylesheet" href="index.css">
-    
-</head>
+  <head>
+    <title>24</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <h3>ДЗ 23. Подоба інтернет-магазину </h3>
+      <h3>ДЗ 24. Форма для реєстрації</h3>
     </header>
-    <div class="container">  
-        <div class = "categories-left">
-            <h1>Категорії:</h1>
-        </div>
-        <div class = "item-list-middle"></div>
-        <div class = "details-right"></div>
-    </div> 
-    <script src="myscripts.js"></script>
-</body>
-</html>
 
+    <form action="/page">
+      <p>Загальна інформація</p>
+      <div class="name">
+        <label for="fname">Ім'я</label>
+        <input type="text" id="fname" value="Леся" required />
+
+        <label for="lname">Прізвище</label>
+        <input type="text" id="lname" value="Українка" required />
+      </div>
+
+      <div class="dob">
+        <label for="dob">Дата Народження</label>
+        <input type="date" id="dob" value="1871-02-25" required />
+      </div>
+
+      <div class="sex">
+        <p>Стать</p>
+        <input type="radio" id="female" />
+        <label for="female">Жіноча</label>
+        <input type="radio" id="male" />
+        <label for="male">Чоловіча</label>
+
+        <input type="text" id="other" value="Інше.." />
+      </div>
+
+      <div class="city">
+        <label for="city">Місто</label>
+        <select id="city" required></select>
+      </div>
+
+      <div class="address">
+        <p>Aдреса Проживання</p>
+        <label for="address-str">Вулиця</label>
+        <input type="text" id="address-str" required />
+
+        <label for="address-apt">Квартира, під'їзд</label>
+        <input type="text" id="address-apt" required />
+      </div>
+
+      <div class="languages">
+        <p>Мови якими володієте</p>
+        <input type="checkbox" id="ukr" />
+        <label for="ukr">Українська</label>
+        <input type="checkbox" id="eng" />
+        <label for="eng">Англійська</label>
+        <input type="text" id="otherLanguage" value="Інші мови" />
+      </div>
+
+      <input class="submit" type="submit" value="Надіслати Форму" />
+    </form>
+
+    <script src="myscripts.js"></script>
+  </body>
+</html>

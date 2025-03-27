@@ -1,217 +1,218 @@
-// Дано 3 блоки:
+const form = document.querySelector("form");
 
-// У лівій частині сторінки – перелік категорій.
+function cityImplementation() {
+  const cities = [
+    { value: "kyiv", text: "Київ" },
+    { value: "lviv", text: "Львів" },
+    { value: "odesa", text: "Одеса" },
+    { value: "kharkiv", text: "Харків" },
+    { value: "dnipro", text: "Дніпро" },
+    { value: "zaporizhzhia", text: "Запоріжжя" },
+    { value: "kherson", text: "Херсон" },
+    { value: "cherkasy", text: "Черкаси" },
+    { value: "vinnytsia", text: "Вінниця" },
+    { value: "sumy", text: "Суми" },
+    { value: "poltava", text: "Полтава" },
+    { value: "ivano_frankivsk", text: "Івано-Франківськ" },
+    { value: "ternopil", text: "Тернопіль" },
+    { value: "lutsk", text: "Луцьк" },
+    { value: "mykolaiv", text: "Миколаїв" },
+    { value: "chernivtsi", text: "Чернівці" },
+  ];
 
-// При натисканні на категорію виводиться у середній блок список товарів цієї категорії.
+  const selectElement = document.getElementById("city");
 
-// Клік на товар – інформацію про товар у правому блоці.
-
-// В інформації товару - кнопка "купити"
-
-// При натисканні на “купити” з'являється повідомлення,
-// що товар куплено та повернення у вихідний стан програми
-// (коли відображається лише список категорій)
-
-const categories = [
-  {
-    category: "Електроніка",
-    products: [
-      {
-        name: "Ноутбук",
-        brand: "Dell",
-        price: "15 000 грн",
-        description: "Потужний ноутбук для роботи та розваг, 16 ГБ RAM, 512 ГБ SSD."
-      },
-      {
-        name: "Смартфон",
-        brand: "Samsung",
-        price: "10 000 грн",
-        description: "Смартфон з потужною камерою 108 МП і великим екраном."
-      },
-      {
-        name: "Навушники",
-        brand: "Sony",
-        price: "1 500 грн",
-        description: "Безпровідні навушники з активним шумозаглушенням."
-      },
-      {
-        name: "Телевізор",
-        brand: "LG",
-        price: "25 000 грн",
-        description: "4K телевізор з підтримкою смарт-функцій."
-      },
-      {
-        name: "Фітнес-браслет",
-        brand: "Xiaomi",
-        price: "1 000 грн",
-        description: "Фітнес-браслет для моніторингу здоров'я та активності."
-      }
-    ]
-  },
-  {
-    category: "Одяг",
-    products: [
-      {
-        name: "Футболка",
-        brand: "Nike",
-        price: "500 грн",
-        description: "Класична бавовняна футболка різних розмірів."
-      },
-      {
-        name: "Джинси",
-        brand: "Levi's",
-        price: "1 200 грн",
-        description: "Сучасні джинси з деніму, різні фасони."
-      },
-      {
-        name: "Куртка",
-        brand: "Columbia",
-        price: "2 500 грн",
-        description: "Тепла зимова куртка для активного відпочинку."
-      },
-      {
-        name: "Кеди",
-        brand: "Adidas",
-        price: "1 000 грн",
-        description: "Універсальні спортивні кеди для щоденного використання."
-      },
-      {
-        name: "Сукня",
-        brand: "Zara",
-        price: "1 800 грн",
-        description: "Елегантна сукня для вечірок та святкових подій."
-      }
-    ]
-  },
-  {
-    category: "Книги",
-    products: [
-      {
-        name: "Нічний цирк",
-        brand: "Видавництво Старого Лева",
-        price: "300 грн",
-        author: "Ерін Морганстерн",
-        description: "Роман у стилі магічного реалізму про таємничий цирк, який з'являється без попередження, де два ілюзіоністи змагаються між собою."
-      },
-      {
-        name: "Освічена",
-        brand: "Наш Формат",
-        price: "350 грн",
-        author: "Тара Вестовер",
-        description: "Мемуари, що розповідають про боротьбу авторки за вихід з суворої родини у сільському штаті Айдахо та її шлях до освіти."
-      },
-      {
-        name: "Сапієнс: Коротка історія людства",
-        brand: "КСД",
-        price: "400 грн",
-        author: "Юваль Ноа Харарі",
-        description: "Глибокий та провокативний погляд на історію людства, що вивчає, як люди еволюціонували і як сформували світ навколо себе."
-      },
-      {
-        name: "Чому нації терплять поразки",
-        brand: "Yakaboo",
-        price: "420 грн",
-        author: "Дарон Аджемоглу, Джеймс Робінсон",
-        description: "Вивчає, чому одні нації досягають успіху, а інші терплять поразки, і яку роль у цьому відіграють політичні та економічні інститути."
-      },
-      {
-        name: "Місто і місячне світло",
-        brand: "Фоліо",
-        price: "380 грн",
-        author: "Крістофер Скотт",
-        description: "Історичний роман, що охоплює період з раннього середньовіччя до сучасності, розповідаючи про боротьбу за владу та життя в умовах змінюваного світу."
-      }
-    ]
-  }
-];
-
-const left = document.querySelector(".categories-left");
-const middle = document.querySelector(".item-list-middle");
-const right = document.querySelector(".details-right");
-
-function generateCategoryTitle(categoryTitle) {
-  const categoryTitleElement = document.createElement("h2");
-  categoryTitleElement.textContent = categoryTitle;
-  return categoryTitleElement;
-}
-
-function generateProductName(productName) {
-  const productTitleElement = document.createElement("h3");
-  productTitleElement.textContent = productName;
-  return productTitleElement;
-}
-
-
-function generateCategories(categories) {
-
-  categories.forEach((category) => {
-    const categoryDiv = document.createElement("div");
-    const categoryTitle = generateCategoryTitle(category.category);
-
-    categoryTitle.style.cursor = "pointer";
-    categoryDiv.appendChild(categoryTitle);
-    left.appendChild(categoryDiv);
-
-    categoryTitle.addEventListener('click', () => {
-      generateProductList(category.products)
-    });
+  cities.forEach((city) => {
+    const option = document.createElement("option");
+    option.value = city.value;
+    option.text = city.text;
+    selectElement.appendChild(option);
   });
 }
 
+cityImplementation();
 
-
-function generateProductList(products){
-  middle.innerHTML = "";
-
-  const ul = document.createElement("ul");
-
-   products.forEach((product) => {
-      const li = document.createElement("li");
-      li.textContent = product.name;
-      li.style.cursor = "pointer";
-
-      li.addEventListener("click", () => {
-        generateInformationAboutProducts(product);
-      });
-
-      ul.appendChild(li);
-    });
-
-    middle.appendChild(ul);
-
+function nameAndDobReset() {
+  document.querySelector("#fname").addEventListener("focus", (event) => {
+    event.target.value = "";
+  });
+  document.querySelector("#lname").addEventListener("focus", (event) => {
+    event.target.value = "";
+  });
+  document.querySelector("#dob").addEventListener("focus", (event) => {
+    event.target.value = "";
+  });
 }
 
+nameAndDobReset();
 
-function generateInformationAboutProducts(product){
-  right.innerHTML = "";
+function setupSexSelection() {
+  const maleSex = document.querySelector("#male");
+  const femaleSex = document.querySelector("#female");
+  const otherSex = document.querySelector("#other");
 
-  const productName = generateProductName(product.name);
-  right.appendChild(productName)
+  otherSex.addEventListener("input", () => {
+    maleSex.checked = false;
+    femaleSex.checked = false;
+  });
 
-  const productPrice = document.createElement("p");
-  productPrice.textContent = `Ціна: ${product.price}`;
-  right.appendChild(productPrice);
+  maleSex.addEventListener("change", () => {
+    femaleSex.checked = false;
+    otherSex.checked = false;
+  });
 
-  const productDescription = document.createElement("p");
-  productDescription.textContent = `Опис: ${product.description}`;
-  right.appendChild(productDescription);
-
-  const productBrand = document.createElement("p");
-  productBrand.textContent = `Виробник: ${product.brand}`;
-  right.appendChild(productBrand);
-
-  
-  const button = document.createElement("button");
-  button.textContent = "КУПИТИ!"
-  right.appendChild(button);
-  button.classList = "btn";
-
-  button.addEventListener("click", () => {
-    alert(`Товар куплено!`)
-    location.reload(); 
-  })
-
+  femaleSex.addEventListener("change", () => {
+    maleSex.checked = false;
+    otherSex.checked = false;
+  });
 }
 
+setupSexSelection();
 
-generateCategories(categories);
+function validateSexSelection() {
+  const maleSex = document.querySelector("#male");
+  const femaleSex = document.querySelector("#female");
+  const otherSex = document.querySelector("#other");
+  const sexClass = document.querySelector(".sex");
+
+  otherSex.addEventListener("focus", () => {
+    otherSex.value = "";
+  });
+
+  const isMaleChecked = maleSex.checked;
+  const isFemaleChecked = femaleSex.checked;
+  const isOtherFilled =
+    otherSex.value.trim() !== "" && otherSex.value !== "Інше..";
+
+  const existingError = document.querySelector(".sex-error");
+  if (existingError) {
+    existingError.remove();
+  }
+
+  if (!isMaleChecked && !isFemaleChecked && !isOtherFilled) {
+    showError(sexClass, "sex-error", "Вкажіть стать");
+    return false;
+  } else {
+    removeError(".sex-error");
+    return true;
+  }
+}
+
+const otherSex = document.querySelector("#other");
+otherSex.addEventListener("focus", () => {
+  otherSex.value = "";
+});
+
+function validateLanguageSelection() {
+  const ukrainian = document.querySelector("#ukr");
+  const english = document.querySelector("#eng");
+  const otherLanguage = document.querySelector("#otherLanguage");
+  const languageClass = document.querySelector(".languages");
+
+  otherLanguage.addEventListener("focus", () => {
+    otherLanguage.value = "";
+  });
+
+  const isUkrainianChecked = ukrainian.checked;
+  const isEnglishChecked = english.checked;
+  const isOtherFilled =
+    otherLanguage.value.trim() !== "" && otherLanguage.value !== "Інші мови";
+
+  const existingError = document.querySelector(".language-error");
+  if (existingError) {
+    existingError.remove();
+  }
+
+  if (!isUkrainianChecked && !isEnglishChecked && !isOtherFilled) {
+    showError(languageClass, "language-error", "Оберіть мови якими володієте");
+    return false;
+  } else {
+    removeError(".language-error");
+    return true;
+  }
+}
+
+const otherLanguage = document.querySelector("#otherLanguage");
+otherLanguage.addEventListener("focus", () => {
+  otherLanguage.value = "";
+});
+
+function showError(parent, errorClass, message) {
+  let error = document.querySelector(`${errorClass}`);
+  if (!error) {
+    error = document.createElement("h3");
+    error.classList.add(errorClass);
+    error.textContent = message;
+    parent.appendChild(error);
+  }
+}
+
+function removeError(selector) {
+  const error = document.querySelector(selector);
+  if (error) error.remove();
+}
+
+function validateForm(event) {
+  const isSexIsValid = validateSexSelection();
+  const isLanguageValid = validateLanguageSelection();
+
+  if (!isSexIsValid || !isLanguageValid) {
+    event.preventDefault();
+  }
+}
+
+function informationOutput(event) {
+  event.preventDefault();
+
+  if (validateSexSelection() && validateLanguageSelection()) {
+    const fname = document.querySelector("#fname").value;
+    const lname = document.querySelector("#lname").value;
+    const dob = document.querySelector("#dob").value;
+
+    const city = document.getElementById("city");
+    const selectedCity = city.options[city.selectedIndex].text;
+
+    const address1 = document.querySelector("#address-str").value.trim();
+    const address2 = document.querySelector("#address-apt").value.trim();
+
+    const sex = document.querySelector("#male").checked
+      ? "Чоловіча"
+      : document.querySelector("#female").checked
+      ? "Жіноча"
+      : document.querySelector("#other").value || "Не вказано";
+
+    const languages = [];
+
+    if (document.querySelector("#ukr").checked) languages.push(" Українська");
+    if (document.querySelector("#eng").checked) languages.push(" Англійська");
+    if (
+      document.querySelector("#otherLanguage").value.trim() !== "" &&
+      otherLanguage.value !== "Інші мови"
+    ) {
+      languages.push(document.querySelector("#otherLanguage").value);
+    }
+
+    form.innerHTML = "";
+
+    const resultDiv = document.createElement("div");
+    resultDiv.classList.add("resultDiv");
+
+    resultDiv.innerHTML = `
+      <h2>Ваші дані</h2>
+      <p><strong>Iм'я:</strong> ${fname}</p>
+      <p><strong>Прізвище:</strong> ${lname}</p>
+      <p><strong>Стать:</strong> ${sex}</p>
+      <p><strong>Дата Народження:</strong> ${dob}</p>
+      <p><strong>Місто:</strong> ${selectedCity}</p>
+      <p><strong>Aдреса проживання:</strong> ${address1}, ${address2}</p>
+      <p><strong>Мови якими володієте:</strong> ${languages}</p>
+    `;
+
+    form.appendChild(resultDiv);
+  }
+}
+
+form.addEventListener("submit", (event) => {
+  validateForm(event);
+  informationOutput(event);
+});
