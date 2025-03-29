@@ -1,23 +1,72 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>23</title>
-    <link rel="stylesheet" href="index.css">
-    
-</head>
+  <head>
+    <title>25</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <h3>ДЗ 23. Подоба інтернет-магазину </h3>
+      <h3>ДЗ 25. Модифікувати інтернет-магазин (форма)</h3>
     </header>
-    <div class="container">  
-        <div class = "categories-left">
-            <h1>Категорії:</h1>
-        </div>
-        <div class = "item-list-middle"></div>
-        <div class = "details-right"></div>
-    </div> 
-    <script src="myscripts.js"></script>
-</body>
-</html>
+    <div class="container">
+      <div class="categories-left">
+        <h1>Категорії:</h1>
+      </div>
+      <div class="item-list-middle"></div>
+      <div class="details-right"></div>
+    </div>
 
+    <form style="display: none">
+      <h1>Заповніть будь ласка поля для відправки товару нижче</h1>
+      <div class="name">
+        <label for="fname">Ім'я</label>
+        <input type="text" id="fname" />
+
+        <label for="lname">Прізвище</label>
+        <input type="text" id="lname" />
+
+        <label for="pname">По батькові</label>
+        <input type="text" id="pname" />
+      </div>
+
+      <div class="city">
+        <label for="city">Місто</label>
+        <select id="city" required></select>
+
+        <div id="error-message" style="color: red; display: none">
+          будь ласка оберіть ваше місто
+        </div>
+      </div>
+
+      <div class="nova-store">
+        <label for="novaPost">Відділення Нової Пошти</label>
+        <select id="novaPost" required></select>
+      </div>
+
+      <div class="payment">
+        <p>Оберіть оплату</p>
+        <input type="radio" name="payment-method" id="byCard" />
+        <label for="byCard"> Оплатити карткою на сайті</label>
+
+        <input type="radio" name="payment-method" id="payAtTheStore" />
+        <label for="payAtTheStore">Оплата при отриманні</label>
+
+        <div id="error-message-payment" style="color: red; display: none">
+          будь ласка оберіть спосіб оплати
+        </div>
+      </div>
+
+      <div class="comment">
+        <label for="comment">Коментар до замовлення:</label>
+        <input type="text" id="comment" />
+      </div>
+
+      <button type="submit" id="submit-btn">Підтвердити купівлю</button>
+    </form>
+
+    <div class="result-container"></div>
+
+    <script src="myscripts.js"></script>
+  </body>
+</html>

@@ -14,16 +14,23 @@ body {
   margin: 20px 0;
   display: flex;
   justify-content: left;
+  margin-right: 10px;
 }
 
 .container div:first-child {
   flex: 1;
+  margin-right: 10px;
 }
 
 .container div {
-  flex: 2;
+  flex: 1;
   padding: 20px;
   text-align: center;
+  margin-right: 50px;
+}
+
+.container div:last-child {
+  flex: 3;
 }
 
 header {
@@ -47,17 +54,9 @@ ul {
 }
 
 .categories-left h1 {
-  flex: 1;
-  font-size: 1.2rem;
-  background-color: #333;
-  color: #ffffff;
+  color: rgb(117, 143, 236);
+  font-size: 1.6rem;
   margin-bottom: 25px;
-  padding: 8px 15px;
-}
-
-.item-list-middle,
-.details-right {
-  flex: 2;
 }
 
 .categories-left div {
@@ -86,19 +85,20 @@ ul {
   color: #333;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertically centers content */
-  align-items: center; /* Horizontally centers content */
+  justify-content: center;
+  align-items: center;
   padding: 20px;
   text-wrap: wrap;
 }
 
 .details-right p {
-  width: 60%; /* Adjust width to suit your content */
+  width: 60%;
   margin-bottom: 5px;
-  text-align: center; /* Ensures the text is centered */
+  text-align: center;
 }
 
-.btn {
+.btn,
+.resetButton {
   display: block;
   margin-top: 10px;
   padding: 10px 15px;
@@ -109,7 +109,132 @@ ul {
   cursor: pointer;
 }
 
+.resetButton {
+  align-items: center;
+  padding: 5px 30px;
+}
+
 button:hover {
-  background: #003976;
+  background: #00761a;
   color: white;
+}
+
+form {
+  background: white;
+  margin: 20px auto;
+  padding: 20px 30px;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: rgb(117, 143, 236);
+  box-shadow: 0 0 5px rgba(38, 114, 66, 0.5);
+}
+
+.payment p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.payment input[type="radio"] {
+  display: none;
+}
+
+.payment label {
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.payment input[type="radio"]:checked + label {
+  background-color: rgb(117, 143, 236);
+  color: white;
+  border-color: rgb(117, 143, 236);
+}
+
+.payment label:hover {
+  background-color: #e9ecef;
+}
+
+.payment input[type="radio"]:focus + label {
+  outline: 2px solid rgb(117, 143, 236);
+}
+button {
+  background-color: rgb(117, 143, 236);
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+#error-message,
+#error-message-payment {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.container > div {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.result-container {
+  display: none;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
