@@ -195,6 +195,7 @@ function generateInformationAboutProducts(product) {
 
   const productPrice = document.createElement("p");
   productPrice.textContent = `Ціна: ${numericPrice} грн`;
+  productPrice.classList.add("price-of-the-selection");
   right.appendChild(productPrice);
 
   input.addEventListener("input", () => {
@@ -401,8 +402,7 @@ function submitPurchaseForm() {
   function validateNameInput() {
     const fName = document.querySelector("#fname").value.trim();
     const lName = document.querySelector("#lname").value.trim();
-    const errorMessage =
-      document.querySelector("#error-message-1") ||
+    const errorMessage = document.querySelector("#error-message-1") ||
       createErrorMessage("Будь-ласка введіть повне ім'я", ".name", 1);
     if (fName && lName) {
       errorMessage.style.display = "none";
@@ -423,9 +423,12 @@ function submitPurchaseForm() {
 
   function validateCityInput() {
     const city = document.querySelector("#city");
-    const errorMessage =
-      document.querySelector("#error-message-1") ||
-      createErrorMessage("Будь-ласка введіть повне ім'я", ".name", 1);
+    const errorMessage = document.querySelector("#error-message-3");
+  
+    if (!errorMessage) {
+      errorMessage = createErrorMessage("Будь ласка оберіть місто", ".name", 3);
+    }
+  
     if (city.value === "choose your city") {
       errorMessage.style.display = "block";
       return false;
@@ -434,6 +437,7 @@ function submitPurchaseForm() {
       return true;
     }
   }
+  
 
   document.querySelector("#city").addEventListener("change", () => {
     const store = document.querySelector("#city").value;
@@ -444,9 +448,11 @@ function submitPurchaseForm() {
 
   function validateStoreSelection() {
     const store = document.querySelector("#novaPost").value;
-    const errorMessage =
-      document.querySelector("#error-message-4") ||
-      createErrorMessage("Будь ласка оберіть відділення", ".nova-store", 4);
+    const errorMessage = document.querySelector("#error-message-4");
+
+    if(!errorMessage){
+      errorMessage = createErrorMessage("Будь ласка оберіть відділення", ".nova-store", 4);
+    }
 
     if (!store) {
       errorMessage.style.display = "block";
@@ -498,56 +504,109 @@ function submitPurchaseForm() {
     if (isCityValid && isPaymentValid && isNameValid && isStoreValid) {
       const form = document.querySelector("form");
       form.style.display = "none";
-
+    
       const resultDiv = document.querySelector(".result-container");
       resultDiv.style.display = "block";
-
+    
       const pname = document.querySelector("#pname")?.value || "";
       const comment =
         document.querySelector("#comment")?.value || "Немає коментарів";
-
+    
       const selectElement = document.getElementById("city");
-      const selectedCityText =
-        selectElement.options[selectElement.selectedIndex].text;
 
+      const selectedCityText = selectElement.selectedIndex >= 0 
+      ? selectElement.options[selectElement.selectedIndex].text 
+      : "";
+    
       const selectElementStore = document.getElementById("novaPost");
       const selectedStoreText =
         selectElementStore.options[selectElementStore.selectedIndex].text;
-
+    
       const buttonBuy = document.querySelector(".btn");
       buttonBuy.style.display = "none";
-
+    
+      const orderData = {
+        receiver: `${document.querySelector("#fname").value} ${document.querySelector("#lname").value} ${pname}`,
+        city: selectedCityText,
+        store: selectedStoreText,
+        payment: document.querySelector("#byCard").checked
+          ? "Оплатити карткою на сайті"
+          : "Оплата при отриманні",
+        quantity: document.querySelector("#quantity-input").value || 0,
+        comment: comment,
+      };
+    
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push(orderData);
+      
+      localStorage.setItem("orders", JSON.stringify(orders));
+    
       resultDiv.innerHTML = `
         <h2>Замовлення прийнято! Вам буде надіслано голуба!</h2>
-        <p><strong>Отримувач: </strong>${
-          document.querySelector("#fname").value
-        } ${document.querySelector("#lname").value} ${pname}</p>
-        <p><strong>Місто: </strong>${selectedCityText} </p>
-        <p><strong>Відділення: </strong> ${selectedStoreText} </p>
-        <p><strong>Метод оплати: </strong>${
-          document.querySelector("#byCard").checked
-            ? "Оплатити карткою на сайті"
-            : "Оплата при отриманні"
-        }</p>
-        <p><strong>Кількість товару: ${
-          document.querySelector("#quantity-input").value || 0
-        } шт</strong> </p>
-        <p><strong>Коментар: </strong> ${comment}</p>
+        <p><strong>Отримувач: </strong>${orderData.receiver}</p>
+        <p><strong>Місто: </strong>${orderData.city} </p>
+        <p><strong>Відділення: </strong> ${orderData.store} </p>
+        <p><strong>Метод оплати: </strong>${orderData.payment}</p>
+        <p><strong>Кількість товару: ${orderData.quantity} шт</strong> </p>
+        <p><strong>Коментар: </strong> ${orderData.comment}</p>
       `;
-
+    
       const resetButton = document.createElement("button");
       resetButton.classList.add("resetButton");
       resetButton.textContent = "На початок";
-
+    
       resetButton.addEventListener("click", () => {
         location.reload();
       });
-
+    
       document.body.appendChild(resetButton);
     } else {
       alert("Будь ласка заповніть всі поля перед відправкою форми.");
     }
+    
   });
 }
 
 submitPurchaseForm();
+
+function ordersInTheCart() {
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  const ordersList = document.querySelector(".orders-list");
+  if (orders.length === 0) {
+    ordersList.innerHTML = "<p>Ваш кошик порожній.</p>";
+  } else {
+    orders.forEach((order, index) => {
+      const orderItem = document.createElement("div");
+      orderItem.classList.add("order-item");
+      orderItem.innerHTML = `
+        <h3>Замовлення #${index + 1}</h3>
+        <p><strong>Отримувач:</strong> ${order.receiver}</p>
+        <p><strong>Місто:</strong> ${order.city}</p>
+        <p><strong>Відділення:</strong> ${order.store}</p>
+        <p><strong>Оплата:</strong> ${order.payment}</p>
+        <p><strong>Кількість:</strong> ${order.quantity} шт</p>
+        <p><strong>Коментар:</strong> ${order.comment}</p>
+        <hr>
+      `;
+      ordersList.appendChild(orderItem);
+    });
+  }
+
+  const cartButton = document.getElementById("my-orders-button");
+  const cartDiv = document.getElementById("cart");
+  const closeCart = document.getElementById("close-cart");
+  const mainContent = document.getElementById("main-content");
+
+  cartButton.addEventListener("click", () => {
+    cartDiv.classList.remove("hidden");
+    mainContent.classList.add("hidden-content");
+  });
+
+  closeCart.addEventListener("click", () => {
+    cartDiv.classList.add("hidden");
+    mainContent.classList.remove("hidden-content");
+  });
+}
+
+ordersInTheCart();

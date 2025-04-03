@@ -258,3 +258,26 @@ button:disabled {
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+#cart {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.hidden-content {
+  display: none;
+}
