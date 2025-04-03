@@ -129,6 +129,7 @@ function generateCategoryTitle(categoryTitle) {
 
 function generateProductName(productName) {
   const productTitleElement = document.createElement("h3");
+  productTitleElement.classList.add("title-of-the-chosen-item");
   productTitleElement.textContent = productName;
   return productTitleElement;
 }
@@ -205,6 +206,7 @@ function generateInformationAboutProducts(product) {
   });
 
   const productDescription = document.createElement("p");
+  productDescription.classList.add("description-of-the-chosen-item");
   productDescription.textContent = `Опис: ${product.description}`;
   right.appendChild(productDescription);
 
@@ -524,8 +526,17 @@ function submitPurchaseForm() {
     
       const buttonBuy = document.querySelector(".btn");
       buttonBuy.style.display = "none";
+
+      const now = new Date();
+      const time = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+      const date = now.toISOString().slice(0, 10); 
+
     
       const orderData = {
+        date: `${date} ${time}`,
+        price: `${document.querySelector(".price-of-the-selection").textContent.replace("Ціна: ", "")}`,
+        item: `${document.querySelector(".title-of-the-chosen-item").textContent}`,
+        itemDescription:`${document.querySelector(".description-of-the-chosen-item").textContent.replace("Опис: ", "")}`,
         receiver: `${document.querySelector("#fname").value} ${document.querySelector("#lname").value} ${pname}`,
         city: selectedCityText,
         store: selectedStoreText,
@@ -544,6 +555,8 @@ function submitPurchaseForm() {
       resultDiv.innerHTML = `
         <h2>Замовлення прийнято! Вам буде надіслано голуба!</h2>
         <p><strong>Отримувач: </strong>${orderData.receiver}</p>
+        <p class="time-result"><strong>Час і дата замовлення: </strong>${orderData.date}</p>
+        <p class = "price-result"><strong>Ціна: </strong>${orderData.price}</p>
         <p><strong>Місто: </strong>${orderData.city} </p>
         <p><strong>Відділення: </strong> ${orderData.store} </p>
         <p><strong>Метод оплати: </strong>${orderData.payment}</p>
@@ -576,18 +589,31 @@ function ordersInTheCart() {
   if (orders.length === 0) {
     ordersList.innerHTML = "<p>Ваш кошик порожній.</p>";
   } else {
+    ordersList.innerHTML = '';
+
     orders.forEach((order, index) => {
       const orderItem = document.createElement("div");
       orderItem.classList.add("order-item");
       orderItem.innerHTML = `
-        <h3>Замовлення #${index + 1}</h3>
-        <p><strong>Отримувач:</strong> ${order.receiver}</p>
-        <p><strong>Місто:</strong> ${order.city}</p>
-        <p><strong>Відділення:</strong> ${order.store}</p>
-        <p><strong>Оплата:</strong> ${order.payment}</p>
-        <p><strong>Кількість:</strong> ${order.quantity} шт</p>
-        <p><strong>Коментар:</strong> ${order.comment}</p>
+        <div class = "date-price">
+        <h3>Замовлення #${index + 1}
+         <button class = "delete-item">❌</button>
+         </h3>
+         <p><strong>Дата:</strong> ${order.date}</p>
+        <p><strong>Ціна:</strong> ${order.price}</p>
+        </div>
+        <div class="order-details-cart">
+          <p><strong>Товар: </strong>${order.item}</p>
+          <p><strong>Опис Товару: </strong>${order.itemDescription}</p>
+          <p><strong>Отримувач:</strong> ${order.receiver}</p>
+          <p><strong>Місто:</strong> ${order.city}</p>
+          <p><strong>Відділення:</strong> ${order.store}</p>
+          <p><strong>Оплата:</strong> ${order.payment}</p>
+          <p><strong>Кількість:</strong> ${order.quantity} шт</p>
+          <p><strong>Коментар:</strong> ${order.comment}</p>
+        </div>
         <hr>
+
       `;
       ordersList.appendChild(orderItem);
     });
@@ -606,6 +632,24 @@ function ordersInTheCart() {
   closeCart.addEventListener("click", () => {
     cartDiv.classList.add("hidden");
     mainContent.classList.remove("hidden-content");
+  });
+
+  ordersList.addEventListener("click", (event) => {
+    const details = event.target.closest(".date-price").nextElementSibling;
+    if (details) {
+    details.style.display = details.style.display === "none" ? "block" : "none";
+}
+
+  })
+
+  ordersList.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-item")) {
+      const orderIndex = [...ordersList.children].indexOf(event.target.closest(".order-item"));
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.splice(orderIndex, 1); // Remove the order from the array
+      localStorage.setItem("orders", JSON.stringify(orders)); // Update localStorage
+      ordersInTheCart(); // Re-render the cart
+    }
   });
 }
 

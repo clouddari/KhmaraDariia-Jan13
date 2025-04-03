@@ -260,10 +260,9 @@ button:disabled {
 }
 
 #cart {
-  position: fixed;
   top: 50px;
-  right: 20px;
-  width: 300px;
+  width: 700px;
+  margin: 50px auto;
   max-height: 400px;
   background: white;
   border: 1px solid #ddd;
@@ -274,10 +273,50 @@ button:disabled {
   overflow-y: auto;
 }
 
+.button-heading{
+  display: flex;
+  flex-direction: column;
+}
+
+.button-heading h3{
+ margin: auto;
+}
+
+.button-heading button{
+  font-size: 0.7rem;
+  width: 250px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #333;
+  border-radius: 15px;
+  background-color: white;
+  color: black;
+  padding: 2px 10px;
+}
+
+.button-heading button:hover{
+  background-color: rgba(213, 156, 253, 0.861);
+}
+
 .hidden {
   display: none;
 }
 
 .hidden-content {
+  display: none;
+}
+
+.delete-item{
+  margin: 5px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.delete-item:hover{
+  background-color: rgb(132, 178, 232);
+}
+
+.order-details-cart{
   display: none;
 }
