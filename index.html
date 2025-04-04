@@ -1,89 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>26</title>
+    <title>27</title>
     <link rel="stylesheet" href="index.css" />
   </head>
 
   <body>
     <header>
-      <h3>ДЗ 26. Модифікувати інтернет-магазин (localStorage)</h3>
-      <div class="my-orders">
-        <button id="my-orders-button"> 
-          <img src ="https://www.freeiconspng.com/thumbs/cart-icon/basket-cart-icon-27.png" height="18px"/>
-          Мої замовлення
-        </button>
-      </div>
+      <h3>ДЗ 27. CRUD додаток для users</h3>
     </header>
 
-    <main id="main-content">
+    <main>
+      <div class="add-a-user">
+        <form>
+          <h1>Add a user</h1>
+          <label for = "name">Name</label>
+          <input id="name" type="text" /> 
 
-    <div class="container">
-      <div class="categories-left">
-        <h1>Категорії:</h1>
+          <label for = "age">Age</label>
+          <input id="age" type="text" /> 
+
+          <label for = "country">Country</label>
+          <input id="country" type="text" /> 
+
+          <button class="add-a-user-button" type="submit">Add!</button>
+        </form>
       </div>
-      <div class="item-list-middle"></div>
-      <div class="details-right"></div>
-    </div>
+      <h1>Список користувачів</h1>
+      <div class="list">
+        <ul>
 
-    <form style="display: none">
-      <h1>Заповніть будь ласка поля для відправки товару нижче</h1>
-      <div class="name">
-        <label for="fname">Ім'я</label>
-        <input type="text" id="fname" />
-
-        <label for="lname">Прізвище</label>
-        <input type="text" id="lname" />
-
-        <label for="pname">По батькові</label>
-        <input type="text" id="pname" />
+        </ul>
       </div>
-
-      <div class="city">
-        <label for="city">Місто</label>
-        <select id="city" required></select>
-
-        <div id="error-message" style="color: red; display: none">
-          будь ласка оберіть ваше місто
-        </div>
-      </div>
-
-      <div class="nova-store">
-        <label for="novaPost">Відділення Нової Пошти</label>
-        <select id="novaPost" required></select>
-      </div>
-
-      <div class="payment">
-        <p>Оберіть оплату</p>
-        <input type="radio" name="payment-method" id="byCard" />
-        <label for="byCard"> Оплатити карткою на сайті</label>
-
-        <input type="radio" name="payment-method" id="payAtTheStore" />
-        <label for="payAtTheStore">Оплата при отриманні</label>
-
-        <div id="error-message-payment" style="color: red; display: none">
-          будь ласка оберіть спосіб оплати
-        </div>
-      </div>
-
-      <div class="comment">
-        <label for="comment">Коментар до замовлення:</label>
-        <input type="text" id="comment" />
-      </div>
-
-      <button type="submit" id="submit-btn">Підтвердити купівлю</button>
-    </form>
-  </main>
-
-    <div class="result-container"></div>
-
-    <div class="hidden" id ="cart">
-      <div class="button-heading">
-        <button id="close-cart">  ← до попередньої сторінки </button>
-        <h3>Ваш кошик</h3>
-      </div>
-        <div class="orders-list"></div>
-    </div>
+    </main>
 
     <script src="myscripts.js"></script>
   </body>

@@ -10,331 +10,59 @@ body {
   margin: 0;
   margin-bottom: 50px;
 }
-
-.container {
-  margin: 20px 0;
-  display: flex;
-  justify-content: left;
-  margin-right: 10px;
+main{
+  margin: 0 50px;
+}
+h1{
+  font-size: 1.5rem;
+  margin: 10px 0;
 }
 
-.container div:first-child {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.container div {
-  flex: 1;
-  padding: 20px;
-  text-align: center;
-}
-
-.container div:last-child {
-  flex: 3;
-}
 
 header {
   text-align: center;
   align-items: center;
-  background-color: rgb(117, 143, 236);
+  background-color: rgb(32, 32, 32);
+  color: white;
   padding: 5px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-header button{
+ul{
+  margin: 10px 0;
+}
+
+li{
   margin: 5px 10px;
-  background-color: rgb(255, 255, 255);
-  color: black;
-  padding: 5px 15px;
-  border-radius: 18px;
-  align-items: center;
-}
-
-header button:hover{
-  background-color: rgba(213, 156, 253, 0.861);
-  color:#333;
-}
-
-
-ul {
+  padding: 5px;
   list-style: none;
+  border-bottom: 1px solid #808080;
 }
 
-.categories-left,
-.item-list-middle,
-.details-right {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.categories-left h1 {
-  color: rgb(117, 143, 236);
-  font-size: 1.6rem;
-  margin-bottom: 25px;
-}
-
-.categories-left div {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.categories-left div:hover {
-  background: #e9ecef;
-}
-
-.item-list-middle li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
-}
-
-.item-list-middle li:hover {
-  background: #e9ecef;
-}
-
-.details-right {
-  background-color: #f9f9f9;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  text-wrap: wrap;
-}
-
-.details-right p {
-  width: 60%;
-  margin-bottom: 5px;
-  text-align: center;
-}
-
-.btn,
-.resetButton {
-  display: block;
-  margin-top: 10px;
-  padding: 10px 15px;
-  border: none;
-  background: #77b3e4;
-  color: rgb(0, 0, 0);
-  border-radius: 20px;
-  cursor: pointer;
-  
-}
-
-.resetButton {
-  align-items: center;
-  padding: 5px 30px;
-}
-
-button:hover {
-  background: #00761a;
-  color: white;
-}
-
-form {
-  background: white;
-  margin: 20px auto;
-  padding: 20px 30px;
-  max-width: 600px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-form h1 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-form label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-form input,
-form select,
-form button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-form input:focus,
-form select:focus {
-  outline: none;
-  border-color: rgb(117, 143, 236);
-  box-shadow: 0 0 5px rgba(38, 114, 66, 0.5);
-}
-
-.payment p {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.payment input[type="radio"] {
-  display: none;
-}
-
-.payment label {
-  display: inline-block;
-  padding: 10px 30px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.payment input[type="radio"]:checked + label {
-  background-color: rgb(117, 143, 236);
-  color: white;
-  border-color: rgb(117, 143, 236);
-}
-
-.payment label:hover {
-  background-color: #e9ecef;
-}
-
-.payment input[type="radio"]:focus + label {
-  outline: 2px solid rgb(117, 143, 236);
-}
-button {
-  background-color: rgb(117, 143, 236);
-  color: white;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
-}
-
-#error-message,
-#error-message-payment {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: -10px;
-  margin-bottom: 10px;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-}
-
-.container > div {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.result-container {
-  display: none;
-  margin: 50px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#cart {
-  top: 50px;
-  width: 700px;
-  margin: 50px auto;
-  max-height: 400px;
-  background: white;
-  border: 1px solid #ddd;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  z-index: 1000;
-  border-radius: 10px;
-  overflow-y: auto;
-}
-
-.button-heading{
-  display: flex;
-  flex-direction: column;
-}
-
-.button-heading h3{
- margin: auto;
-}
-
-.button-heading button{
-  font-size: 0.7rem;
-  width: 250px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #333;
+button{
+  background-color: rgb(255, 243, 190);
+  padding: 3px 10px;
+  border: 0.5px solid #5e5e5e;
   border-radius: 15px;
-  background-color: white;
-  color: black;
-  padding: 2px 10px;
+  margin: 0 2px;
 }
 
-.button-heading button:hover{
-  background-color: rgba(213, 156, 253, 0.861);
+button:hover{
+  background-color: #676767;
+  color: rgb(255, 243, 190);
 }
 
-.hidden {
+.more-details{
   display: none;
 }
 
-.hidden-content {
-  display: none;
+.name-buttons{
+  display: flex;
+  flex-direction: row;
 }
 
-.delete-item{
-  margin: 5px;
-  background-color: white;
-  padding: 2px;
-  border-radius: 5px;
-}
-
-.delete-item:hover{
-  background-color: rgb(132, 178, 232);
-}
-
-.order-details-cart{
-  display: none;
-  padding: 0 10px;
-}
-
-.order-item{
-  padding: 10px 5px;
-}
-
-.date-price{
-  padding: 10px;
-  padding-bottom: 0;
-}
-
-.date-price:hover{
-  background-color: rgba(231, 207, 174, 0.47);
-}
-
-.more-details-button{
-  background-color: white;
-  border-radius: 15px;
-  color: #333;
-  border-style: solid;
-  border-width: 0.8px;
-  padding: 3px 8px;
+.name{
+  margin-right: 40px;
 }
