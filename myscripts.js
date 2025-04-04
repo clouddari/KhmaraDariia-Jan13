@@ -190,6 +190,18 @@ function generateInformationAboutProducts(product) {
   input.value = 1;
   input.min = 1;
   input.max = 10;
+
+  input.addEventListener("input", () => {
+    const value = Number(input.value);
+    const min = Number(input.min);
+    const max = Number(input.max);
+
+    if (value < min) {
+      input.value = min;
+    } else if (value > max) {
+      input.value = max;
+    }
+  });
   inputDiv.appendChild(input);
 
   const numericPrice = parseInt(product.price.replace(/\s/g, ""), 10);
@@ -404,7 +416,8 @@ function submitPurchaseForm() {
   function validateNameInput() {
     const fName = document.querySelector("#fname").value.trim();
     const lName = document.querySelector("#lname").value.trim();
-    const errorMessage = document.querySelector("#error-message-1") ||
+    const errorMessage =
+      document.querySelector("#error-message-1") ||
       createErrorMessage("Будь-ласка введіть повне ім'я", ".name", 1);
     if (fName && lName) {
       errorMessage.style.display = "none";
@@ -426,11 +439,11 @@ function submitPurchaseForm() {
   function validateCityInput() {
     const city = document.querySelector("#city");
     const errorMessage = document.querySelector("#error-message-3");
-  
+
     if (!errorMessage) {
       errorMessage = createErrorMessage("Будь ласка оберіть місто", ".name", 3);
     }
-  
+
     if (city.value === "choose your city") {
       errorMessage.style.display = "block";
       return false;
@@ -439,7 +452,6 @@ function submitPurchaseForm() {
       return true;
     }
   }
-  
 
   document.querySelector("#city").addEventListener("change", () => {
     const store = document.querySelector("#city").value;
@@ -452,8 +464,12 @@ function submitPurchaseForm() {
     const store = document.querySelector("#novaPost").value;
     const errorMessage = document.querySelector("#error-message-4");
 
-    if(!errorMessage){
-      errorMessage = createErrorMessage("Будь ласка оберіть відділення", ".nova-store", 4);
+    if (!errorMessage) {
+      errorMessage = createErrorMessage(
+        "Будь ласка оберіть відділення",
+        ".nova-store",
+        4
+      );
     }
 
     if (!store) {
@@ -506,38 +522,50 @@ function submitPurchaseForm() {
     if (isCityValid && isPaymentValid && isNameValid && isStoreValid) {
       const form = document.querySelector("form");
       form.style.display = "none";
-    
+
       const resultDiv = document.querySelector(".result-container");
       resultDiv.style.display = "block";
-    
+
       const pname = document.querySelector("#pname")?.value || "";
       const comment =
         document.querySelector("#comment")?.value || "Немає коментарів";
-    
+
       const selectElement = document.getElementById("city");
 
-      const selectedCityText = selectElement.selectedIndex >= 0 
-      ? selectElement.options[selectElement.selectedIndex].text 
-      : "";
-    
+      const selectedCityText =
+        selectElement.selectedIndex >= 0
+          ? selectElement.options[selectElement.selectedIndex].text
+          : "";
+
       const selectElementStore = document.getElementById("novaPost");
       const selectedStoreText =
         selectElementStore.options[selectElementStore.selectedIndex].text;
-    
+
       const buttonBuy = document.querySelector(".btn");
       buttonBuy.style.display = "none";
 
       const now = new Date();
-      const time = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
-      const date = now.toISOString().slice(0, 10); 
+      const time = `${now.getHours().toString().padStart(2, "0")}:${now
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+      const date = now.toISOString().slice(0, 10);
 
-    
       const orderData = {
+        id: crypto.randomUUID(),
         date: `${date} ${time}`,
-        price: `${document.querySelector(".price-of-the-selection").textContent.replace("Ціна: ", "")}`,
-        item: `${document.querySelector(".title-of-the-chosen-item").textContent}`,
-        itemDescription:`${document.querySelector(".description-of-the-chosen-item").textContent.replace("Опис: ", "")}`,
-        receiver: `${document.querySelector("#fname").value} ${document.querySelector("#lname").value} ${pname}`,
+        price: `${document
+          .querySelector(".price-of-the-selection")
+          .textContent.replace("Ціна: ", "")}`,
+        item: `${
+          document.querySelector(".title-of-the-chosen-item").textContent
+        }`,
+        itemDescription: `${document
+          .querySelector(".description-of-the-chosen-item")
+          .textContent.replace("Опис: ", "")}`,
+        receiver: `${document.querySelector("#fname").value} ${
+          document.querySelector("#lname").value
+        } ${pname}`,
         city: selectedCityText,
         store: selectedStoreText,
         payment: document.querySelector("#byCard").checked
@@ -546,12 +574,12 @@ function submitPurchaseForm() {
         quantity: document.querySelector("#quantity-input").value || 0,
         comment: comment,
       };
-    
+
       const orders = JSON.parse(localStorage.getItem("orders")) || [];
       orders.push(orderData);
-      
+
       localStorage.setItem("orders", JSON.stringify(orders));
-    
+
       resultDiv.innerHTML = `
         <h2>Замовлення прийнято! Вам буде надіслано голуба!</h2>
         <p><strong>Отримувач: </strong>${orderData.receiver}</p>
@@ -563,20 +591,19 @@ function submitPurchaseForm() {
         <p><strong>Кількість товару: ${orderData.quantity} шт</strong> </p>
         <p><strong>Коментар: </strong> ${orderData.comment}</p>
       `;
-    
+
       const resetButton = document.createElement("button");
       resetButton.classList.add("resetButton");
       resetButton.textContent = "На початок";
-    
+
       resetButton.addEventListener("click", () => {
         location.reload();
       });
-    
-      document.body.appendChild(resetButton);
+
+      resultDiv.appendChild(resetButton);
     } else {
       alert("Будь ласка заповніть всі поля перед відправкою форми.");
     }
-    
   });
 }
 
@@ -589,22 +616,24 @@ function ordersInTheCart() {
   if (orders.length === 0) {
     ordersList.innerHTML = "<p>Ваш кошик порожній.</p>";
   } else {
-    ordersList.innerHTML = '';
+    ordersList.innerHTML = "";
 
     orders.forEach((order, index) => {
       const orderItem = document.createElement("div");
       orderItem.classList.add("order-item");
+      orderItem.setAttribute("data-id", order.id);
+
       orderItem.innerHTML = `
         <div class = "date-price">
         <h3>Замовлення #${index + 1}
-         <button class = "delete-item">❌</button>
+          <button class = "delete-item">❌</button>
          </h3>
          <p><strong>Дата:</strong> ${order.date}</p>
         <p><strong>Ціна:</strong> ${order.price}</p>
         </div>
         <div class="order-details-cart">
           <p><strong>Товар: </strong>${order.item}</p>
-          <p><strong>Опис Товару: </strong>${order.itemDescription}</p>
+          <p><strong>Опис товару: </strong>${order.itemDescription}</p>
           <p><strong>Отримувач:</strong> ${order.receiver}</p>
           <p><strong>Місто:</strong> ${order.city}</p>
           <p><strong>Відділення:</strong> ${order.store}</p>
@@ -637,18 +666,23 @@ function ordersInTheCart() {
   ordersList.addEventListener("click", (event) => {
     const details = event.target.closest(".date-price").nextElementSibling;
     if (details) {
-    details.style.display = details.style.display === "none" ? "block" : "none";
-}
-
-  })
+      details.style.display =
+        details.style.display === "none" ? "block" : "none";
+    }
+  });
 
   ordersList.addEventListener("click", (event) => {
     if (event.target.classList.contains("delete-item")) {
-      const orderIndex = [...ordersList.children].indexOf(event.target.closest(".order-item"));
-      const orders = JSON.parse(localStorage.getItem("orders")) || [];
-      orders.splice(orderIndex, 1); // Remove the order from the array
-      localStorage.setItem("orders", JSON.stringify(orders)); // Update localStorage
-      ordersInTheCart(); // Re-render the cart
+      const orderElement = event.target.closest(".order-item");
+      const orderId = orderElement.dataset.id;
+
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders = orders.filter((order) => order.id !== orderId);
+
+      localStorage.setItem("orders", JSON.stringify(orders));
+      orderElement.remove();
+
+      ordersInTheCart();
     }
   });
 }
