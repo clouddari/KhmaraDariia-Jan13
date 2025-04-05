@@ -10,14 +10,13 @@ body {
   margin: 0;
   margin-bottom: 50px;
 }
-main{
+main {
   margin: 0 50px;
 }
-h1{
+h1 {
   font-size: 1.5rem;
   margin: 10px 0;
 }
-
 
 header {
   text-align: center;
@@ -30,18 +29,18 @@ header {
   justify-content: space-between;
 }
 
-ul{
+ul {
   margin: 10px 0;
 }
 
-li{
+li {
   margin: 5px 10px;
   padding: 5px;
   list-style: none;
   border-bottom: 1px solid #808080;
 }
 
-button{
+button {
   background-color: rgb(255, 243, 190);
   padding: 3px 10px;
   border: 0.5px solid #5e5e5e;
@@ -49,20 +48,20 @@ button{
   margin: 0 2px;
 }
 
-button:hover{
+button:hover {
   background-color: #676767;
   color: rgb(255, 243, 190);
 }
 
-.more-details{
+.more-details {
   display: none;
 }
 
-.name-buttons{
+.name-buttons {
   display: flex;
   flex-direction: row;
 }
 
-.name{
+.name {
   margin-right: 40px;
 }

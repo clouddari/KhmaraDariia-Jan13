@@ -1,4 +1,3 @@
-
 // Створити CRUD-додаток (Create, Read, Update, Delete):
 
 // Виводиться список користувачів із кнопками “Edit”, “Remove”, “View” біля кожного користувача (use data-id attributes або event delegation)
@@ -39,7 +38,7 @@ class UserList {
   addUser(name, age, country) {
     const newUser = new User(name, age, country);
     this.users.push(newUser);
-    this.saveUsers(); 
+    this.saveUsers();
   }
 
   getUsers() {
@@ -49,58 +48,117 @@ class UserList {
 
 function renderUserList(userList) {
   const ul = document.querySelector("ul");
-  ul.innerHTML = '';
+  ul.innerHTML = "";
 
   const users = userList.getUsers();
-  users.forEach(user => {
+  users.forEach((user, index) => {
     const li = document.createElement("li");
     li.classList.add("user-item");
+    li.setAttribute("data-id", index);
+
     li.innerHTML = `
     <div class="name-buttons"> 
       <p class="name">Name: ${user.name}</p>
+      <input class="edit-name" type="text" value="${user.name}" style="display:none;" />
+
       <button class="view-button">View</button>
       <button class="edit-button">Edit</button>
       <button class="remove-button">Remove</button>
     </div>
     <div class="more-details"> 
      <p class="age"> Age: ${user.age}</p>
+      <input class="edit-age" type="number" value="${user.age}" style="display:none;" />
+
      <p class="country"> Country: ${user.country}</p>
+    <input class="edit-country" type="text" value="${user.country}" style="display:none;" />
+
     </div>
     `;
     ul.appendChild(li);
   });
+}
 
-  const viewButtons = document.querySelectorAll(".view-button");
-  const editButtons = document.querySelectorAll(".edit-button");
-  const removeButtons = document.querySelectorAll(".remove-button");
+function addEventDelegation(userList) {
+  const ul = document.querySelector("ul");
 
-  viewButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      const userItem = button.closest(".user-item");
-      const moreDetails = userItem.querySelector(".more-details");
-      
-      moreDetails.style.display = moreDetails.style.display === "block" ? "none" : "block";
-    });
-  });
+  ul.addEventListener("click", (event) => {
+    const target = event.target;
+    const userItem = target.closest(".user-item");
+    const moreDetails = userItem.querySelector(".more-details");
 
-  removeButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      const userItem = button.closest(".user-item");
-      const index = Array.from(userItem.parentNode.children).indexOf(userItem);
+    if (target.classList.contains("view-button")) {
+      moreDetails.style.display =
+        moreDetails.style.display === "block" ? "none" : "block";
+      target.textContent = target.textContent === "View" ? "Hide" : "View";
+    }
 
-      if(confirm("are you sure you want to remove this user from the list?")){
-        const userList = new UserList();
-        userList.users.splice(index, 1);
+    if (target.classList.contains("remove-button")) {
+      const userId = userItem.getAttribute("data-id");
+
+      if (confirm("Ви впевнені, що хочете видалити цього користувача?")) {
+        userList.users.splice(userId, 1);
         userList.saveUsers();
-        renderUserList(userList)
+        renderUserList(userList);
       }
-    });
+    }
+
+    if (target.classList.contains("edit-button")) {
+      moreDetails.style.display = "block";
+
+      const userId = userItem.getAttribute("data-id");
+
+      const nameCurrent = userItem.querySelector(".name");
+      const countryCurrent = userItem.querySelector(".country");
+      const ageCurrent = userItem.querySelector(".age");
+
+      const nameInput = userItem.querySelector(".edit-name");
+      const ageInput = userItem.querySelector(".edit-age");
+      const countryInput = userItem.querySelector(".edit-country");
+
+      const isEditing = nameInput.style.display === "inline-block";
+
+      if (!isEditing) {
+        nameInput.style.display = "inline-block";
+        ageInput.style.display = "block";
+        countryInput.style.display = "block";
+
+        nameCurrent.style.display = "none";
+        ageCurrent.style.display = "none";
+        countryCurrent.style.display = "none";
+
+        target.textContent = "Save";
+      } else {
+        const newName = nameInput.value;
+        const newAge = ageInput.value;
+        const newCountry = countryInput.value;
+
+        userList.users[userId].name = newName;
+        userList.users[userId].age = newAge;
+        userList.users[userId].country = newCountry;
+
+        userList.saveUsers();
+        nameCurrent.textContent = `Name: ${newName}`;
+        ageCurrent.textContent = `Age: ${newAge}`;
+        countryCurrent.textContent = `Country: ${newCountry}`;
+
+        nameInput.style.display = "none";
+        ageInput.style.display = "none";
+        countryInput.style.display = "none";
+
+        nameCurrent.style.display = "block";
+        ageCurrent.style.display = "block";
+        countryCurrent.style.display = "block";
+
+        target.textContent = "Edit";
+      }
+    }
   });
 }
 
 function createAListOfUsers() {
   const userList = new UserList();
   renderUserList(userList);
+  addEventDelegation(userList);
 
   const addAUserButton = document.querySelector(".add-a-user-button");
 
@@ -110,7 +168,7 @@ function createAListOfUsers() {
     const age = document.querySelector("#age").value;
     const country = document.querySelector("#country").value;
 
-    if(!name || !age || !country){
+    if (!name || !age || !country) {
       alert("будь ласка заповніть всі поля щоб додати користувача у список");
       return;
     }
@@ -122,8 +180,6 @@ function createAListOfUsers() {
     document.querySelector("#age").value = "";
     document.querySelector("#country").value = "";
   });
-
 }
 
 createAListOfUsers();
-
