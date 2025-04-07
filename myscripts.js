@@ -1,97 +1,185 @@
-function carAndOwner() {
-  function Owner(name, age) {
+// Створити CRUD-додаток (Create, Read, Update, Delete):
+
+// Виводиться список користувачів із кнопками “Edit”, “Remove”, “View” біля кожного користувача (use data-id attributes або event delegation)
+// список користувачів отримувати з js-файлу (масив об'єктів / використовувати функції-конструктори – за бажанням)
+
+// При натисканні на кнопку “View” відкриваються дані користувача у блоці під списком
+// При натисканні на кнопку “Edit” з'являється можливість редагувати дані в блоці під списком. Дані зберігаються при натисканні на кнопку “Save” та оновлюють дані у списку
+// При натисканні на кнопку “Remove” користувач видаляється зі списку
+
+// Обов'язково підтвердження видалення (для уникнення видалення помилково)
+// Реалізувати можливість додавання нових користувачів
+// Бажано перевикористовувати форму редагування
+// При додаванні користувач з'являється у списку
+// Після перезавантаження сторінки всі зміни повинні зберігатись (використовувати localStorage)
+
+class User {
+  constructor(name, age, country) {
     this.name = name;
     this.age = age;
+    this.country = country;
+  }
+}
 
-    this.getName = () => {
-      return this.name;
-    };
-    this.getAge = () => {
-      return this.age;
-    };
+class UserList {
+  constructor() {
+    this.users = this.loadUsers();
   }
 
-  function Car(brand, color, owner) {
-    this.brand = brand;
-    this.color = color;
-    this.owner = owner;
-
-    this.getBrand = () => {
-      return this.brand;
-    };
-
-    this.getColor = () => {
-      return this.color;
-    };
-
-    this.getOwner = () => {
-      return this.owner;
-    };
-
-    this.setOwner = (person) => {
-      this.owner = person;
-    };
-
-    this.presentOwnersCar = () => {
-      return ` I am ${this.owner.name} ${this.owner.age}. My car is ${this.color} ${this.brand}.`;
-    };
+  loadUsers() {
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
+    return storedUsers ? storedUsers : [];
   }
 
-  const form = document.querySelector("form");
-  const resultDiv = document.querySelector(".result");
+  saveUsers() {
+    localStorage.setItem("users", JSON.stringify(this.users));
+  }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
+  addUser(name, age, country) {
+    const newUser = new User(name, age, country);
+    this.users.push(newUser);
+    this.saveUsers();
+  }
 
-    const ownersName = document.querySelector("#owner-name").value.trim();
-    const ownersAge = document.querySelector("#owner-age").value.trim();
-    const carsName = document.querySelector("#car-name").value.trim();
-    const carsColor = document.querySelector("#car-color").value.trim();
+  getUsers() {
+    return this.users;
+  }
+}
 
-    let existingError = document.querySelector(".error");
-    if (existingError) {
-      existingError.remove();
-    }
+function renderUserList(userList) {
+  const ul = document.querySelector("ul");
+  ul.innerHTML = "";
 
-    if (!ownersName || !ownersAge || !carsName || !carsColor) {
-      const error = document.createElement("h3");
-      error.classList.add("error");
-      error.textContent = "Please fill in all fields to submit form";
-      form.appendChild(error);
-      return;
-    }
+  const users = userList.getUsers();
+  users.forEach((user, index) => {
+    const li = document.createElement("li");
+    li.classList.add("user-item");
+    li.setAttribute("data-id", index);
 
-    if (ownersAge < 18) {
-      const error = document.createElement("h3");
-      error.classList.add("error");
-      error.textContent = "Owner's age must be 18 y.o. or older";
-      form.appendChild(error);
-      return;
-    }
+    li.innerHTML = `
+    <div class="name-buttons"> 
+      <p class="name">Name: ${user.name}</p>
+      <input class="edit-name" type="text" value="${user.name}" style="display:none;" />
 
-    const newOwner = new Owner(ownersName, ownersAge);
-    const newCar = new Car(carsName, carsColor, newOwner);
+      <button class="view-button">View</button>
+      <button class="edit-button">Edit</button>
+      <button class="remove-button">Remove</button>
+    </div>
+    <div class="more-details"> 
+     <p class="age"> Age: ${user.age}</p>
+      <input class="edit-age" type="number" value="${user.age}" style="display:none;" />
 
-    const div = document.createElement("div");
-    div.classList.add("car-owner-item");
+     <p class="country"> Country: ${user.country}</p>
+    <input class="edit-country" type="text" value="${user.country}" style="display:none;" />
 
-    const carAndOwnerInfo = document.createElement("p");
-    carAndOwnerInfo.textContent = newCar.presentOwnersCar();
-
-    div.appendChild(carAndOwnerInfo);
-    resultDiv.appendChild(div);
-
-    form.reset();
-  });
-
-  const inputs = form.querySelectorAll("input");
-  inputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      const existingError = document.querySelector(".error");
-      if (existingError) {
-        existingError.remove();
-      }
-    });
+    </div>
+    `;
+    ul.appendChild(li);
   });
 }
-carAndOwner();
+
+function addEventDelegation(userList) {
+  const ul = document.querySelector("ul");
+
+  ul.addEventListener("click", (event) => {
+    const target = event.target;
+    const userItem = target.closest(".user-item");
+    const moreDetails = userItem.querySelector(".more-details");
+
+    if (target.classList.contains("view-button")) {
+      moreDetails.style.display =
+        moreDetails.style.display === "block" ? "none" : "block";
+      target.textContent = target.textContent === "View" ? "Hide" : "View";
+    }
+
+    if (target.classList.contains("remove-button")) {
+      const userId = userItem.getAttribute("data-id");
+
+      if (confirm("Ви впевнені, що хочете видалити цього користувача?")) {
+        userList.users.splice(userId, 1);
+        userList.saveUsers();
+        renderUserList(userList);
+      }
+    }
+
+    if (target.classList.contains("edit-button")) {
+      moreDetails.style.display = "block";
+
+      const userId = userItem.getAttribute("data-id");
+
+      const nameCurrent = userItem.querySelector(".name");
+      const countryCurrent = userItem.querySelector(".country");
+      const ageCurrent = userItem.querySelector(".age");
+
+      const nameInput = userItem.querySelector(".edit-name");
+      const ageInput = userItem.querySelector(".edit-age");
+      const countryInput = userItem.querySelector(".edit-country");
+
+      const isEditing = nameInput.style.display === "inline-block";
+
+      if (!isEditing) {
+        nameInput.style.display = "inline-block";
+        ageInput.style.display = "block";
+        countryInput.style.display = "block";
+
+        nameCurrent.style.display = "none";
+        ageCurrent.style.display = "none";
+        countryCurrent.style.display = "none";
+
+        target.textContent = "Save";
+      } else {
+        const newName = nameInput.value;
+        const newAge = ageInput.value;
+        const newCountry = countryInput.value;
+
+        userList.users[userId].name = newName;
+        userList.users[userId].age = newAge;
+        userList.users[userId].country = newCountry;
+
+        userList.saveUsers();
+        nameCurrent.textContent = `Name: ${newName}`;
+        ageCurrent.textContent = `Age: ${newAge}`;
+        countryCurrent.textContent = `Country: ${newCountry}`;
+
+        nameInput.style.display = "none";
+        ageInput.style.display = "none";
+        countryInput.style.display = "none";
+
+        nameCurrent.style.display = "block";
+        ageCurrent.style.display = "block";
+        countryCurrent.style.display = "block";
+
+        target.textContent = "Edit";
+      }
+    }
+  });
+}
+
+function createAListOfUsers() {
+  const userList = new UserList();
+  renderUserList(userList);
+  addEventDelegation(userList);
+
+  const addAUserButton = document.querySelector(".add-a-user-button");
+
+  addAUserButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const name = document.querySelector("#name").value;
+    const age = document.querySelector("#age").value;
+    const country = document.querySelector("#country").value;
+
+    if (!name || !age || !country) {
+      alert("будь ласка заповніть всі поля щоб додати користувача у список");
+      return;
+    }
+
+    userList.addUser(name, age, country);
+    renderUserList(userList);
+
+    document.querySelector("#name").value = "";
+    document.querySelector("#age").value = "";
+    document.querySelector("#country").value = "";
+  });
+}
+
+createAListOfUsers();
