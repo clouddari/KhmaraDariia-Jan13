@@ -1,97 +1,97 @@
-// Створити сутність людини
-// ім'я
-// вік
-// Метод виведення даних
-// Створити сутність автомобіля:
-
-// Характеристики автомобіля окремими властивостями
-// Методи:
-
-// Виведення на екран даних про цей автомобіль
-// Присвоєння цього автомобіля власнику (записати в автомобіль об'єкт власника)
-// Усі дані про людину та про автомобіль отримувати від користувача. Реалізувати необхідні перевірки на коректність введення (порожні поля, вік >18 в людини і т.д. у разі потреби).
-// Максимально використовувати функції
-
-function carAndOwner(){
-  class Owner {
-  constructor (name, age){
+function carAndOwner() {
+  function Owner(name, age) {
     this.name = name;
     this.age = age;
+
+    this.getName = () => {
+      return this.name;
+    };
+    this.getAge = () => {
+      return this.age;
+    };
   }
 
-  getName = () => {
-    return this.name;
-  }
-  getAge = () => {
-    return this.age;
-  }
-
-}
-
-class Car{
-  constructor(brand, color, owner){
+  function Car(brand, color, owner) {
     this.brand = brand;
     this.color = color;
     this.owner = owner;
+
+    this.getBrand = () => {
+      return this.brand;
+    };
+
+    this.getColor = () => {
+      return this.color;
+    };
+
+    this.getOwner = () => {
+      return this.owner;
+    };
+
+    this.setOwner = (person) => {
+      this.owner = person;
+    };
+
+    this.presentOwnersCar = () => {
+      return ` I am ${this.owner.name} ${this.owner.age}. My car is ${this.color} ${this.brand}.`;
+    };
   }
 
-  getBrand = () =>{
-    return this.brand;
-  }
+  const form = document.querySelector("form");
+  const resultDiv = document.querySelector(".result");
 
-  getColor = () => {
-    return this.color;
-  }
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  getOwner = () => {
-    return this.owner;
-  }
+    const ownersName = document.querySelector("#owner-name").value.trim();
+    const ownersAge = document.querySelector("#owner-age").value.trim();
+    const carsName = document.querySelector("#car-name").value.trim();
+    const carsColor = document.querySelector("#car-color").value.trim();
 
-  setOwner = (person) => {
-    this.owner = person;
-  }
+    let existingError = document.querySelector(".error");
+    if (existingError) {
+      existingError.remove();
+    }
 
-  presentOwnersCar = () => {
-    return ` I am ${this.owner.name} ${this.owner.age}. My car is ${this.color} ${this.brand}.`
-  }
-}
+    if (!ownersName || !ownersAge || !carsName || !carsColor) {
+      const error = document.createElement("h3");
+      error.classList.add("error");
+      error.textContent = "Please fill in all fields to submit form";
+      form.appendChild(error);
+      return;
+    }
 
-// let newOwner = new Owner("bob bib", 45);
-// let newCar = new Car("Запорожець", "golden");
+    if (ownersAge < 18) {
+      const error = document.createElement("h3");
+      error.classList.add("error");
+      error.textContent = "Owner's age must be 18 y.o. or older";
+      form.appendChild(error);
+      return;
+    }
 
-// newCar.setOwner(newOwner);
-// console.log(newCar.getOwner().introduceSelf(), newCar.presentOwnersCar())
+    const newOwner = new Owner(ownersName, ownersAge);
+    const newCar = new Car(carsName, carsColor, newOwner);
 
-const form = document.querySelector("form");
+    const div = document.createElement("div");
+    div.classList.add("car-owner-item");
 
+    const carAndOwnerInfo = document.createElement("p");
+    carAndOwnerInfo.textContent = newCar.presentOwnersCar();
 
-form.addEventListener("submit", (event) => {
-  
-  event.preventDefault();
+    div.appendChild(carAndOwnerInfo);
+    resultDiv.appendChild(div);
 
-  const ownersName = document.querySelector("#owner-name").value;
-  const ownersAge = document.querySelector("#owner-age").value;
-  const carsName = document.querySelector("#car-name").value;
-  const carsColor = document.querySelector("#car-color").value;
+    form.reset();
+  });
 
-  const newOwner = new Owner(ownersName, ownersAge);
-  const newCar = new Car(carsName, carsColor, newOwner);
-
-  const div = document.createElement("div");
-  div.classList.add("car-owner-item");
-
-
-  const carAndOwnerInfo = document.createElement("p");
-  carAndOwnerInfo.textContent = newCar.presentOwnersCar()
-
-  div.appendChild(carAndOwnerInfo);
-  document.body.appendChild(div);
-
-  form.reset();
-});
-
+  const inputs = form.querySelectorAll("input");
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      const existingError = document.querySelector(".error");
+      if (existingError) {
+        existingError.remove();
+      }
+    });
+  });
 }
 carAndOwner();
-
-
-
