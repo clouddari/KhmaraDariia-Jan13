@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>27</title>
+    <title>28</title>
     <link rel="stylesheet" href="index.css" />
   </head>
 
   <body>
     <header>
-      <h3>ДЗ 27. CRUD додаток для users</h3>
+      <h3>ДЗ 28. Сутності людини та автомобіля</h3>
     </header>
+    <form>
+      <div class="owner-div">
+        <label for="owner-name">Owner's name</label>
+        <input type="text" id="owner-name" />
 
-    <main>
-      <div class="add-a-user">
-        <form>
-          <h1>Add a user</h1>
-          <label for="name">Name</label>
-          <input id="name" type="text" />
-
-          <label for="age">Age</label>
-          <input id="age" type="text" />
-
-          <label for="country">Country</label>
-          <input id="country" type="text" />
-
-          <button class="add-a-user-button" type="submit">Add!</button>
-        </form>
+        <label for="owner-age">Owner's age</label>
+        <input type="number" id="owner-age" />
       </div>
-      <h1>Список користувачів</h1>
-      <div class="list">
-        <ul></ul>
+
+      <div class="car-div">
+        <label for="car-name">Brand/Name of their car</label>
+        <input type="text" id="car-name" />
+
+        <label for="car-color">Color of the car</label>
+        <input type="text" id="car-color" />
       </div>
-    </main>
+
+      <button type="submit">Submit</button>
+    </form>
 
     <script src="myscripts.js"></script>
   </body>
