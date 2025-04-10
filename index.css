@@ -15,8 +15,22 @@ form{
   margin: 50px;
 }
 
+
 .number-of-apartments{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
+
+.error {
+  color: red;
+  padding: 2px;
+}
+
+.tenant-container div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 0;
+  margin-top: 15px;
 }
