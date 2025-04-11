@@ -1,191 +1,119 @@
-class NewCondo {
-  constructor(apartments) {
-    this._apartments = apartments;
+const SIZES = {
+  SMALL: {
+    name: "SMALL",
+    price: 50,
+    cals: 20,
+  },
+  LARGE: {
+    name: "LARGE",
+    price: 100,
+    cals: 40,
+  },
+};
+
+const STUFFINGS = {
+  CHEESE: {
+    price: 10,
+    cals: 20,
+  },
+  SALAD: {
+    price: 20,
+    cals: 5,
+  },
+  POTATOES: {
+    price: 15,
+    cals: 10,
+  },
+};
+
+const ADDITIONALS = {
+  SEASONING: {
+    price: 15,
+    cals: 0,
+  },
+  MAYO: {
+    price: 20,
+    cals: 5,
+  },
+};
+
+class Hamburger {
+  constructor(size, stuffing) {
+    this._size = size;
+    this._stuffing = stuffing;
+    this.additionals = [];
+  }
+
+  addAdditionals(additional) {
+    this.additionals.push(additional);
+  }
+
+  calculatePrice() {
+    let total = this._size.price + this._stuffing.price;
+    this.additionals.forEach((additional) => (total += additional.price));
+    return total;
+  }
+
+  calculateCaluries() {
+    let total = this._size.cals + this._stuffing.cals;
+    this.additionals.forEach((additional) => (total += additional.price));
+    return total;
   }
 }
 
-class Apartment {
-  constructor(numberOfTenants, tenants) {
-    this._numberOfTenants = numberOfTenants;
-    this._tenants = tenants;
-  }
-}
+const smallHamburger = document.querySelector("#hamburger-small");
+const largeHamburger = document.querySelector("#hamburger-large");
 
-class Tenant {
-  constructor(name, age) {
-    this._name = name;
-    this._age = age;
-  }
-}
+const cheeseStuffing = document.querySelector("#cheese");
+const potatoStuffing = document.querySelector("#potatoes");
+const saladStuffing = document.querySelector("#salad");
 
-const submitButton = document.getElementById("submit");
+const seasoning = document.querySelector("#seasoning");
+const mayo = document.querySelector("#mayo");
 
-const inputNumberOfApartments = document.querySelector("#apartments");
+const form = document.querySelector("form");
 
-inputNumberOfApartments.addEventListener("input", () => {
-  const error = document.querySelector(".error");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  if (error) error.remove();
-});
+  const sizeDiv = document.querySelector(".size");
+  const stuffingDiv = document.querySelector(".stuffing");
 
-submitButton.addEventListener("click", (event) => {
-  event.preventDefault();
+  if (!smallHamburger.checked && !largeHamburger.checked)
+    createError("Please choose the size of your hamburger.", sizeDiv);
+  if (
+    !potatoStuffing.checked &&
+    !saladStuffing.checked &&
+    !cheeseStuffing.checked
+  )
+    createError("Please choose the stuffing", stuffingDiv);
 
-  const numberOfApartments = parseInt(
-    document.getElementById("apartments").value
-  );
-  const numberOfApartmentsDiv = document.querySelector(".number-of-apartments");
-  numberOfApartmentsDiv.innerHTML = "";
+  smallHamburger.addEventListener("change", removeError);
+  largeHamburger.addEventListener("change", removeError);
 
-  const finalButtonId = "create-condo-btn";
-  const oldButton = document.getElementById(finalButtonId);
-  if (oldButton) oldButton.remove();
+  potatoStuffing.addEventListener("change", removeError);
+  saladStuffing.addEventListener("change", removeError);
+  cheeseStuffing.addEventListener("change", removeError);
 
-  const errorContainer = document.querySelector(
-    ".number-of-apartments-in-the-condo"
-  );
-  const existingError = document.querySelector(".error");
-
-  if (!numberOfApartments || numberOfApartments < 1) {
-    if (!existingError) {
-      const error = document.createElement("p");
-      error.textContent = "Number of Apartments should be more than 1";
-      error.classList.add("error");
-      errorContainer.appendChild(error);
-    }
-    return;
-  } else {
-    if (existingError) existingError.remove();
+  function createError(textOfTheError, div) {
+    const error = document.createElement("p");
+    error.classList.add("error");
+    error.textContent = textOfTheError;
+    error.style.color = "red";
+    div.appendChild(error);
   }
 
-  for (let i = 1; i <= numberOfApartments; i++) {
-    const apartmentDiv = document.createElement("div");
-    apartmentDiv.classList.add("apartment-item");
-
-    const labelTenants = document.createElement("label");
-    labelTenants.textContent = `Apartment #${i} — number of tenants:`;
-    const inputTenants = document.createElement("input");
-    inputTenants.type = "number";
-    inputTenants.id = `apartment-tenants-${i}`;
-
-    apartmentDiv.appendChild(labelTenants);
-    apartmentDiv.appendChild(inputTenants);
-    numberOfApartmentsDiv.appendChild(apartmentDiv);
-
-    inputTenants.addEventListener("change", () => {
-      let tenantContainer = apartmentDiv.querySelector(".tenant-container");
-
-      if (!tenantContainer) {
-        tenantContainer = document.createElement("div");
-        tenantContainer.classList.add("tenant-container");
-        apartmentDiv.appendChild(tenantContainer);
-      }
-
-      tenantContainer.innerHTML = "";
-
-      let tenantError = apartmentDiv.querySelector(".error");
-      if (tenantError) tenantError.remove();
-
-      const tenantCount = parseInt(inputTenants.value);
-
-      if (isNaN(tenantCount) || tenantCount < 0) {
-        tenantError = document.createElement("p");
-        tenantError.textContent = "Number of tenants must be 0 or more";
-        tenantError.classList.add("error");
-        apartmentDiv.appendChild(tenantError);
-        return;
-      }
-
-      for (let t = 1; t <= tenantCount; t++) {
-        const tenantDiv = document.createElement("div");
-
-        const tenantNameLabel = document.createElement("label");
-        tenantNameLabel.textContent = `Tenant #${t} Name: `;
-        const tenantNameInput = document.createElement("input");
-        tenantNameInput.type = "text";
-        tenantNameInput.id = `tenant-name-${i}-${t}`;
-
-        const tenantAgeLabel = document.createElement("label");
-        tenantAgeLabel.textContent = ` Age: `;
-        const tenantAgeInput = document.createElement("input");
-        tenantAgeInput.type = "number";
-        tenantAgeInput.id = `tenant-age-${i}-${t}`;
-
-        tenantDiv.appendChild(tenantNameLabel);
-        tenantDiv.appendChild(tenantNameInput);
-        tenantDiv.appendChild(tenantAgeLabel);
-        tenantDiv.appendChild(tenantAgeInput);
-
-        tenantContainer.appendChild(tenantDiv);
-
-        tenantAgeInput.addEventListener("input", () => {
-          const age = parseInt(tenantAgeInput.value);
-          let existingAgeError =
-            tenantAgeInput.parentElement.querySelector(".error");
-          if (existingAgeError) existingAgeError.remove();
-
-          if (isNaN(age) || age < 0) {
-            const ageError = document.createElement("p");
-            ageError.textContent = "Age cannot be a negative number";
-            ageError.classList.add("error");
-            tenantDiv.appendChild(ageError);
-            return;
-          }
-        });
-      }
+  function removeError() {
+    const errors = document.querySelectorAll(".error");
+    errors.forEach((error) => {
+      if (error) error.remove();
     });
   }
 
-  const finalButton = document.createElement("button");
-  finalButton.id = finalButtonId;
-  finalButton.textContent = "Create Condo Object";
+  //взяти дані з користувача про його бургер + вивести на екран 
 
-  finalButton.addEventListener("click", (event) => {
-    event.preventDefault();
 
-    const apartments = [];
 
-    for (let i = 1; i <= numberOfApartments; i++) {
-      const tenantCount = parseInt(
-        document.getElementById(`apartment-tenants-${i}`).value
-      );
-      const tenants = [];
-
-      for (let t = 1; t <= tenantCount; t++) {
-        const name = document.getElementById(`tenant-name-${i}-${t}`).value;
-        const age = parseInt(
-          document.getElementById(`tenant-age-${i}-${t}`).value
-        );
-        tenants.push(new Tenant(name, age));
-      }
-
-      apartments.push(new Apartment(tenantCount, tenants));
-    }
-
-    const condo = new NewCondo(apartments);
-
-    let newCondoDiv = document.createElement("div");
-    newCondoDiv.classList.add("condo-info");
-    newCondoDiv.innerHTML = `<h3>Condo Information</h3>`;
-
-    apartments.forEach((apartment, i) => {
-      const apartmentDiv = document.createElement("div");
-      apartmentDiv.classList.add("apartment-info");
-      apartmentDiv.innerHTML = `<h4>Apartment #${i + 1}:</h4>`;
-
-      apartment._tenants.forEach((tenant, t) => {
-        apartmentDiv.innerHTML += `<p>Tenant #${t + 1}: ${tenant._name}, Age: ${
-          tenant._age
-        } </p>`;
-      });
-
-      newCondoDiv.appendChild(apartmentDiv);
-    });
-    document.body.appendChild(newCondoDiv);
-  });
-
-  numberOfApartmentsDiv.appendChild(document.createElement("br"));
-  numberOfApartmentsDiv.appendChild(finalButton);
-
-  submitButton.style.display = "none";
 });
+
+

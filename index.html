@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>30</title>
+    <title>31</title>
     <link rel="stylesheet" href="index.css" />
   </head>
 
   <body>
-    <header>ДЗ 30. Сутності багатоквартирного будинка</header>
-
+    <header>ДЗ 31. Гамбургер</header>
     <form>
-      <h2>Create a new condo</h2>
-      <div class="number-of-apartments-in-the-condo">
-        <label for="apartments">step 1: Number of apartments</label>
-        <input
-          id="apartments"
-          type="number"
-          placeholder="Number of apartments"
-        />
-        <button id="submit">Generate Apartments</button>
+      <div class="size">
+        <h2>Step 1: Choose size of your Hamburger</h2>
+        <input type="radio" name="hamburger-size" id="hamburger-small" />
+        <label for="hamburger-small">Small </label>
+
+        <input type="radio" name="hamburger-size" id="hamburger-large" />
+        <label for="hamburger-large">Large </label>
       </div>
 
-      <div class="number-of-apartments"></div>
+      <div class="stuffing">
+        <h2>Step 2: Choose one stuffing</h2>
+        <input type="radio" name="stuffing" id="cheese" />
+        <label for="cheese-stuffing">Cheese </label>
+
+        <input type="radio" name="stuffing" id="salad" />
+        <label for="salad-stuffing">Salad </label>
+
+        <input type="radio" name="stuffing" id="potatoes" />
+        <label for="potatoes-stuffing">Potatoes </label>
+      </div>
+
+      <div class="additionals">
+        <h2>Step 3: Anything in addition? (optional)</h2>
+        <input type="checkbox" id="seasoning" />
+        <label for="seasoning">Seasoning</label>
+
+        <input type="checkbox" id="mayo" />
+        <label for="mayo">Mayonnaise </label>
+      </div>
+
+      <button type="submit">Buy</button>
     </form>
 
     <script src="myscripts.js"></script>
