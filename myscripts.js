@@ -1,170 +1,125 @@
-const SIZES = {
-  SMALL: {
-    name: "SMALL",
-    price: 50,
-    cals: 20,
-  },
-  LARGE: {
-    name: "LARGE",
-    price: 100,
-    cals: 40,
-  },
-};
-
-const STUFFINGS = {
-  CHEESE: {
-    price: 10,
-    cals: 20,
-  },
-  SALAD: {
-    price: 20,
-    cals: 5,
-  },
-  POTATOES: {
-    price: 15,
-    cals: 10,
-  },
-};
-
-const ADDITIONALS = {
-  SEASONING: {
-    price: 15,
-    cals: 0,
-  },
-  MAYO: {
-    price: 20,
-    cals: 5,
-  },
-};
-
-class Hamburger {
-  constructor(size, stuffing) {
-    this._size = size;
-    this._stuffing = stuffing;
-    this.additionals = [];
+class Student {
+  constructor(name, lastName, yearOfBirth, marks = []) {
+    this.name = name;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.marks = marks;
+    this.attendance = new Array(25).fill(null);
+    this._attendanceIndex = 0;
   }
 
-  addAdditionals(additional) {
-    this.additionals.push(additional);
+  getAge() {
+    const currentYear = new Date().getFullYear();
+    return currentYear - this.yearOfBirth;
   }
 
-  calculatePrice() {
-    let total = this._size.price + this._stuffing.price;
-    this.additionals.forEach((additional) => (total += additional.price));
-    return total;
+  getAverageMark() {
+    if (this.marks.length === 0) return 0;
+
+    const sum = this.marks.reduce((acc, mark) => acc + mark, 0);
+    return sum / this.marks.length;
   }
 
-  calculateCalories() {
-    let total = this._size.cals + this._stuffing.cals;
-    this.additionals.forEach((additional) => (total += additional.cals));
-    return total;
+  present() {
+    if (this._attendanceIndex < 25) {
+      this.attendance[this._attendanceIndex] = true;
+      this._attendanceIndex++;
+    } else {
+      alert("Відвідуваність вже заповнена!");
+    }
+  }
+
+  absent() {
+    if (this._attendanceIndex < 25) {
+      this.attendance[this._attendanceIndex] = false;
+      this._attendanceIndex++;
+    } else {
+      alert("Відвідуваність вже заповнена!");
+    }
+  }
+
+  summary() {
+    const avgMark = this.getAverageMark();
+    const attendedClasses = this.attendance.filter((a) => a === true).length;
+    const totalMarked = this.attendance.filter((a) => a !== null).length;
+    const attendanceRate = totalMarked > 0 ? attendedClasses / totalMarked : 0;
+
+    if (avgMark > 90 && attendanceRate > 0.9) {
+      return "Молодець!";
+    } else if (avgMark > 90 || attendanceRate > 0.9) {
+      return "Добре, але можна краще";
+    } else {
+      return "Редиска!";
+    }
   }
 }
 
-const smallHamburger = document.querySelector("#hamburger-small");
-const largeHamburger = document.querySelector("#hamburger-large");
+const STUDENT_1 = new Student(
+  "Serhii",
+  "Kravchenko",
+  1995,
+  (marks = [100, 100, 99, 98, 100, 100, 99])
+);
+const STUDENT_2 = new Student(
+  "Alina",
+  "Chorna",
+  2002,
+  (marks = [100, 100, 65, 95, 80, 100])
+);
+const STUDENT_3 = new Student(
+  "Stepan",
+  "Melnychenko",
+  1999,
+  (marks = [90, 100, 85])
+);
 
-const cheeseStuffing = document.querySelector("#cheese");
-const potatoStuffing = document.querySelector("#potatoes");
-const saladStuffing = document.querySelector("#salad");
+const ul = document.querySelector(".student-list-ul");
+let students = [STUDENT_1, STUDENT_2, STUDENT_3];
 
-const seasoning = document.querySelector("#seasoning");
-const mayo = document.querySelector("#mayo");
+students.forEach((student) => {
+  const li = document.createElement("li");
+  li.classList.add("student-item");
 
-const form = document.querySelector("form");
+  const nameSpan = document.createElement("span");
+  nameSpan.textContent = `${student.name} ${
+    student.lastName
+  }, ${student.getAge()}`;
 
-smallHamburger.addEventListener("change", removeError);
-largeHamburger.addEventListener("change", removeError);
-potatoStuffing.addEventListener("change", removeError);
-saladStuffing.addEventListener("change", removeError);
-cheeseStuffing.addEventListener("change", removeError);
+  const divButtons = document.createElement("div");
+  divButtons.classList.add("buttons");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  const presentButton = document.createElement("button");
+  presentButton.classList.add("present-button");
+  presentButton.textContent = "Present";
 
-  const sizeDiv = document.querySelector(".size");
-  const stuffingDiv = document.querySelector(".stuffing");
+  const absentButton = document.createElement("button");
+  absentButton.classList.add("absent-button");
+  absentButton.textContent = "Absent";
 
-  removeError();
+  const summaryButton = document.createElement("button");
+  summaryButton.classList.add("summary-button");
+  summaryButton.textContent = "Summary";
 
-  let hasError = false;
+  ul.appendChild(nameSpan);
+  ul.appendChild(li);
+  li.appendChild(divButtons);
+  divButtons.appendChild(presentButton);
+  divButtons.appendChild(absentButton);
+  divButtons.appendChild(summaryButton);
 
-  if (!smallHamburger.checked && !largeHamburger.checked) {
-    createError("Please choose the size of your hamburger.", sizeDiv);
-    hasError = true;
-  }
-
-  if (
-    !potatoStuffing.checked &&
-    !saladStuffing.checked &&
-    !cheeseStuffing.checked
-  ) {
-    createError("Please choose the stuffing", stuffingDiv);
-    hasError = true;
-  }
-
-  if (hasError) return;
-
-  let size;
-  if (smallHamburger.checked) size = SIZES.SMALL;
-  else if (largeHamburger.checked) size = SIZES.LARGE;
-
-  let stuffing;
-  if (cheeseStuffing.checked) stuffing = STUFFINGS.CHEESE;
-  else if (potatoStuffing.checked) stuffing = STUFFINGS.POTATOES;
-  else if (saladStuffing.checked) stuffing = STUFFINGS.SALAD;
-
-  const selectedToppings = [];
-  if (seasoning.checked) selectedToppings.push("SEASONING");
-  if (mayo.checked) selectedToppings.push("MAYO");
-
-  const chosenHamburgerByTheCustomer = new Hamburger(size, stuffing);
-
-  const existingResult = document.querySelector(".result");
-  if (existingResult) existingResult.remove();
-
-  const resultDiv = document.createElement("div");
-  resultDiv.classList.add("result");
-  document.body.appendChild(resultDiv);
-
-  selectedToppings.forEach((topping) => {
-    if (ADDITIONALS[topping]) {
-      chosenHamburgerByTheCustomer.addAdditionals(ADDITIONALS[topping]);
-    }
+  presentButton.addEventListener("click", () => {
+    student.present();
+    console.log(`${student.name} is marked present`);
   });
 
-  resultDiv.innerHTML = `
-      <h2>Your Hamburger:</h2>
-      <p><b>size: </b>${size.name} ─ <b>price: ${size.price}</b></p>
-      <p><b>stuffing: ${Object.keys(STUFFINGS).find(
-        (key) => STUFFINGS[key] === stuffing
-      )} ─ </b><b>price: ${stuffing.price}</b></p>
-      <p><b>toppings: </b>${selectedToppings.join(", ")} ─ <b>price: ${
-    chosenHamburgerByTheCustomer.calculatePrice() - size.price - stuffing.price
-  }</b></p>
-      <h3><b>Total: ${chosenHamburgerByTheCustomer.calculatePrice()} / Calories: ${chosenHamburgerByTheCustomer.calculateCalories()}</b></h3>
-    `;
+  absentButton.addEventListener("click", () => {
+    student.absent();
+    console.log(`${student.name} is marked absent`);
+  });
 
-  const refreshPage = document.createElement("button");
-  refreshPage.textContent = "Start Over";
-  resultDiv.appendChild(refreshPage);
-
-  refreshPage.addEventListener("click", () => {
-    window.location.reload();
+  summaryButton.addEventListener("click", () => {
+    const summaryContent = document.createElement("p");
+    summaryContent.textContent = `${student.name} ${student.summary()}`;
+    li.appendChild(summaryContent);
   });
 });
-
-function createError(textOfTheError, div) {
-  const error = document.createElement("p");
-  error.classList.add("error");
-  error.textContent = textOfTheError;
-  error.style.color = "red";
-  div.appendChild(error);
-}
-
-function removeError() {
-  const errors = document.querySelectorAll(".error");
-  errors.forEach((error) => {
-    if (error) error.remove();
-  });
-}
