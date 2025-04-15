@@ -19,14 +19,27 @@ header {
   padding-bottom: 0.5rem;
 }
 
-#clock {
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-}
-#clock img {
+img {
   width: 120px;
   height: auto;
   padding: 5px;
   border-radius: 445px;
+}
+
+#slider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #061d4f;
+  color: white;
+  border: none;
+  border-radius: 25px;
+}
+button:hover {
+  background-color: #064f31;
 }
