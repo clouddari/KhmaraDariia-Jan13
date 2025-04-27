@@ -1,69 +1,57 @@
-const responses = [
-  "😍 круто! ",
-  "no way 🫨",
-  "ЩооОООо? ⁉️",
-  "дякую 👌",
-  "обожнюю цю погоду 🌡️☁️🌞",
-  "час придбати велосипед 🚲",
-  "🤒i`m sick of that",
-  "🐾🐾🐾🐾🐾🐾🐾meow🐈‍⬛🐈‍⬛",
-  "🕷️boo🕸️",
-];
 
-const sendButton = document.querySelector("button");
-const inputField = document.querySelector("input");
+const tooltipTriggerList = document.querySelectorAll(
+  '[data-bs-toggle="tooltip"]'
+);
+const tooltipList = [...tooltipTriggerList].map(
+  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+);
 
-inputField.addEventListener("input", () => {
-  if (
-    inputField.value.trim() !== "" &&
-    inputField.value !== "почніть писати..."
-  ) {
-    sendButton.disabled = false;
+const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
+const appendAlert = (message, type) => {
+  if (alertPlaceholder.classList.contains("d-none")) {
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = [
+      `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+      `   <div>${message}</div>`,
+      '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+      "</div>",
+    ].join("");
+
+    alertPlaceholder.innerHTML = ``;
+    alertPlaceholder.append(wrapper);
+    alertPlaceholder.classList.remove("d-none");
   } else {
-    sendButton.disabled = true;
+    alertPlaceholder.classList.add("d-none");
+    alertPlaceholder.innerHTML = "";
   }
-});
+};
 
-async function handleMessage() {
-  const input = inputField.value.trim();
-  const responsesDiv = document.querySelector(".chat-messages");
-
-  function addMessage(text) {
-    const p = document.createElement("p");
-    p.textContent = text;
-    responsesDiv.appendChild(p);
-    return p;
-  }
-
-  function wait(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  if (input === "My watch has ended") {
-    addMessage("чат завершено");
-    sendButton.disabled = true;
-    return;
-  } else if (!input) {
-    addMessage("введіть повідомлення щоб отримати відповідь");
-    sendButton.disabled = true;
-  } else {
-    addMessage(input);
-    inputField.value = "";
-    const thinking = addMessage("чат-бот набирає повідомлення...");
-
-    await wait(Math.random() * 9000 + 1000);
-    responsesDiv.removeChild(thinking);
-
-    const chance = Math.random();
-    if (chance < 0.1) {
-      addMessage("мені раптом набридло...💤💤💤 чат завершено");
-      sendButton.disabled = true;
-      return;
-    }
-
-    let randomMessage = responses[Math.floor(Math.random() * responses.length)];
-    addMessage(randomMessage);
-  }
+const alertTrigger = document.getElementById("liveAlertBtn");
+if (alertTrigger) {
+  alertTrigger.addEventListener("click", () => {
+    appendAlert("Nice, you triggered this alert message!", "success");
+  });
 }
 
-sendButton.addEventListener("click", handleMessage);
+// Вивести дату вашого народження в довільному форматі з використанням moment.js
+const myDOB = "01.03.2001";
+const myDOBWithMoment = moment(myDOB, "DD.MM.YYYY").format("LL");
+console.log(`моя дата народження ${myDOBWithMoment}`)
+
+//Отримати від користувача дату його народження в певному форматі і через moment.js перетворити в інший формат
+const input = document.querySelector("#date"); //2222-02-22
+const button = document.querySelector(".getDOB");
+const momentDiv = document.querySelector(".moment");
+moment.locale("uk");
+
+button.addEventListener("click", () => {
+  const dateValue = moment(input.value);
+  const div = document.createElement("div");
+  div.innerHTML = `
+  <p>Ваша дата народження: ${dateValue.format("LL")}</p>
+  `;
+
+  momentDiv.appendChild(div);
+  input.value="";
+
+});

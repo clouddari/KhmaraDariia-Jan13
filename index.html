@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>35</title>
+    <title>36</title>
     <link rel="stylesheet" href="index.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
   </head>
 
   <body>
-    <header>ДЗ 35. Чат-бот з браузером</header>
-    <div class="chat-bot">
-      <div class="chat-messages"></div>
-      <div class="input-area">
-        <input type="text" placeholder="почніть писати..." />
-        <button>Send</button>
-      </div>
+    <header>ДЗ 36. Працюємо з бібліотеками bootstrap, moment</header>
+
+    <div class="bootstrap-hw">
+      <div id="liveAlertPlaceholder" class="d-none"></div>
+
+      <button
+        type="button"
+        class="btn btn-dark"
+        data-bs-toggle="tooltip"
+        data-bs-title="The tip!"
+      >
+        Кнопка з тултіпом
+      </button>
+
+      <button type="button" class="btn btn-dark" id="liveAlertBtn">
+        кнопка з алертом
+      </button>
+
+     
     </div>
 
+    <div class="moment">
+       <input type="date" id="date" />
+      <button type="button" class="btn btn-dark getDOB">Отримати дату народження</button>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="..."
+      crossorigin="anonymous"
+    ></script>
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <script src="node_modules/moment/locale/uk.js"></script>
+    <script src="node_modules/moment/dist/locale/uk.js"></script>
     <script src="myscripts.js"></script>
   </body>
 </html>

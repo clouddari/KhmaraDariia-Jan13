@@ -1,72 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
-
-body {
-  background-color: #9daef0;
-  font-family: "Space Grotesk", sans-serif;
-  color: #f5f5f5;
-  padding: 3rem 1rem;
+.moment{
+  margin: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  max-width: 60%;
 }
 
-header {
-  font-size: 2rem;
-  color: #061d4f;
-  margin-bottom: 3rem;
-  letter-spacing: 1px;
-  border-bottom: 2px solid #444;
-  padding-bottom: 0.5rem;
-}
-
-img {
-  width: 120px;
-  height: auto;
-  padding: 5px;
-  border-radius: 445px;
-}
-
-#slider {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-button {
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #061d4f;
-  color: white;
-  border: none;
-  border-radius: 25px;
-}
-button:hover {
-  background-color: #064f31;
-}
-
-button:disabled,
-button:disabled:hover {
-  color: #444;
-  background-color: #c6c6c6;
-}
-
-.chat-bot {
-  height: 350px;
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ccc;
-  overflow: hidden;
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 5px;
-}
-
-.input-area {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #ccc;
+input, select{
+  width: 50%;
 }
