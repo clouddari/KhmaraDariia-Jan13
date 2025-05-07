@@ -2,6 +2,17 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+.content {
+    flex: 1; 
+  }
+
 .custom-navbar .container-fluid {
   background-color: none;
 }
@@ -33,7 +44,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 550px;
+  height: 540px;
 }
 
 .homepage .display-2 {
@@ -56,6 +67,33 @@
 .homepage {
   display: none;
 }
+
 .homepage.active {
   display: block;
+}
+
+#menu-page{
+    display: none;
+}
+
+#menu-page.active{
+    display: block;
+}
+
+#cart{
+    font-size:1.3rem;
+    margin-right: 10px;
+}
+
+#cart svg{
+    margin-bottom: 8px;
+}
+
+#cart:hover{
+    color:#d4aa7d;
+}
+
+footer{
+background-color:#90A9B7 ;
+padding: 1rem;
 }
