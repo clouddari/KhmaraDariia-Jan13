@@ -1,0 +1,61 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.custom-navbar .container-fluid {
+  background-color: none;
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+  color: #272727;
+  font-weight: 500;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #d4aa7d;
+}
+
+.custom-navbar .nav-link {
+  font-size: 18px;
+  padding: 10px 15px;
+}
+
+.custom-navbar .custom-color {
+  color: #d4aa7d;
+  font-weight: 900;
+  font-size: 2rem;
+  margin-left: 10px;
+}
+
+.homepage {
+  background-image: url(https://static.wixstatic.com/media/2809ce_97d7876a5df5462ea9adb7e1db822e93~mv2.jpg/v1/fill/w_3000,h_1865,al_c,q_90/Organic%20Vegetables_edited.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 550px;
+}
+
+.homepage .display-2 {
+  align-items: center;
+  color: #272727;
+  padding: 60px 40px;
+}
+
+.display-6 {
+  padding-left: 40px;
+  font-size: 1.5rem;
+  max-width: 650px;
+}
+
+.homepage button {
+  margin: 50px 40px;
+  padding: 10px 30px;
+}
+
+.homepage {
+  display: none;
+}
+.homepage.active {
+  display: block;
+}
