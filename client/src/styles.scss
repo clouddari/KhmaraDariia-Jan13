@@ -2,16 +2,27 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
 
 .content {
-    flex: 1; 
-  }
+  flex: 1;
+}
+.homepage,
+#menu-page,
+#cart-page,
+.about-us {
+  display: none;
+}
+
+.active {
+  display: block !important;
+}
 
 .custom-navbar .container-fluid {
   background-color: none;
@@ -29,14 +40,12 @@ html, body {
 
 .custom-navbar .nav-link {
   font-size: 18px;
-  padding: 10px 15px;
 }
 
 .custom-navbar .custom-color {
   color: #d4aa7d;
   font-weight: 900;
   font-size: 2rem;
-  margin-left: 10px;
 }
 
 .homepage {
@@ -68,32 +77,214 @@ html, body {
   display: none;
 }
 
-.homepage.active {
-  display: block;
+#menu-page {
+  display: none;
 }
 
-#menu-page{
-    display: none;
+#open-menu-btn svg {
+  margin-bottom: 6px;
 }
 
-#menu-page.active{
-    display: block;
+#open-menu-btn:hover,
+.details-toggle:hover {
+  background-color: #d4aa7d;
+  border-color: #d4aa7d;
+  color: #272727;
+  transition: 0.2s ease-in;
 }
 
-#cart{
-    font-size:1.3rem;
-    margin-right: 10px;
+.category-btn.selected {
+  background-color: #d4aa7d;
+  color: #272727;
+  border-color: #d4aa7d;
 }
 
-#cart svg{
-    margin-bottom: 8px;
+.category-btn {
+  border-color: #272727;
+  color: #272727;
+}
+.category-btn:hover,
+.category-btn:focus {
+  background-color: #90a9b7 !important;
+  border-color: #90a9b7;
 }
 
-#cart:hover{
-    color:#d4aa7d;
+.category-btn:active {
+  color: #272727 !important;
+  background-color: #d4aa7d !important;
+  border-color: #d4aa7d !important;
 }
 
-footer{
-background-color:#90A9B7 ;
-padding: 1rem;
+.bi {
+  transition: transform 0.3s ease;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+#products-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 2fr));
+  align-items: start;
+}
+
+.collapse button {
+  margin-top: 10px;
+  border: none;
+  color: #272727;
+  background-color: #efd09e;
+}
+
+.collapse button:hover,
+.collapse button:focus,
+.collapse button:active,
+.collapse button.active {
+  background-color: #d2d8b3 !important;
+  color: #272727;
+}
+
+#cart-message {
+  background-color: #d2d8b3;
+  border: none;
+  color: #272727;
+  margin-top: 80px;
+  margin-right: 20px;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: 1px solid #272727;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #d2d8b3;
+  border-color: #d2d8b3;
+}
+
+#cart {
+  font-size: 1.3rem;
+  margin-right: 50px;
+}
+
+#cart svg {
+  margin-bottom: 8px;
+}
+
+#cart:hover {
+  color: #d4aa7d;
+}
+
+#cart-page,
+.about-us {
+  display: none;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.cart-item p {
+  margin: auto;
+  font-weight: 800;
+}
+
+.toppings-list-cart {
+  flex-grow: 1;
+  text-align: center;
+  min-width: 250px;
+}
+
+.toppings-list-cart ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.item-content {
+  flex: 1;
+  text-align: left;
+}
+
+.remove-from-cart {
+  border: none;
+  background: transparent;
+  font-size: 1.12rem;
+  background-color: #ab3030;
+  cursor: pointer;
+}
+
+.remove-from-cart:hover {
+  background-color: #272727;
+}
+
+.clear-cart {
+  background-color: #ab3030;
+}
+
+.clear-cart:hover,
+.send-cart:hover {
+  background-color: #272727;
+}
+
+.send-cart {
+  background-color: #24743f;
+}
+
+.empty-cart-message {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.about-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.about-content {
+  margin-bottom: 20px;
+}
+
+.about-us {
+  background-image: url("https://img.freepik.com/free-photo/concept-healthy-food-composition-healthy-ingredients-vegetarian-cuisine_127032-3255.jpg?t=st=1746740979~exp=1746744579~hmac=4607db91d6b9597c857f7a1cef0f3ae25aa9eab7625f0d79461fa944866c6df2&w=1380");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #272727;
+  font-weight: 400;
+  font-size: 1.3rem;
+  height: 490px;
+  padding: auto;
+}
+
+.about-us-page {
+  background: #90a9b7;
+  padding: 20px;
+  border-radius: 10px;
+  margin-right: 80px;
+  max-width: 500px;
+}
+
+footer {
+  background-color: #90a9b7;
+  padding: 1rem;
 }
