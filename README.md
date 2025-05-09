@@ -1,4 +1,4 @@
-☕️ Online Cafe 38
+ Online Cafe 38  ☕️
 This is a simple online café menu project built with vanilla JavaScript, HTML, CSS, and Bootstrap.
 The app allows users to browse food items, customize them with toppings, and add them to the cart.
 
